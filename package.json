@@ -1,0 +1,21 @@
+{
+	"name": "ile",
+	"version": "0.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"type": "module",
+	"devDependencies": {
+		"eslint": "^9.21.0",
+		"prettier": "^3.5.1",
+		"typescript-eslint": "^8.24.1"
+	},
+	"dependencies": {
+		"lit": "^3.2.1"
+	}
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Design</title>
+		<style>
+			* {
+				background: #555;
+				color: #ccc;
+				font-family: sans-serif;
+			}
+
+			#tabs {
+				display: flex;
+				border: 1px solid #666;
+				flex-direction: row;
+				gap: 1em;
+				position: fixed;
+				top: 0em;
+				left: 0;
+				width: 20em;
+				height: 4em;
+				align-items: center;
+				padding: 0 1em;
+			}
+
+			.tab {
+				border: 1px solid #999;
+				border-radius: 0.5em;
+				padding: 1em;
+				height: 1em;
+			}
+
+			#resources {
+				display: flex;
+				border: 1px solid #666;
+				flex-direction: column;
+				gap: 1em;
+				padding: 1em;
+				position: fixed;
+				top: 4em;
+				left: 0;
+				width: 20em;
+				height: calc(100% - 4em);
+			}
+
+			.resource {
+				border: 1px solid #999;
+				border-radius: 0.5em;
+				padding: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="tabs">
+			<div class="tab">W</div>
+			<div class="tab">R</div>
+		</div>
+		<div id="resources">
+			<div class="resource">Resource 1</div>
+			<div class="resource">Resource 2</div>
+		</div>
+	</body>
+</html>
