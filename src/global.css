@@ -30,6 +30,7 @@ body {
 	grid-column: 1;
 	background: #111;
 	border-right: 1px solid #333;
+	min-width: 200px;
 	width: max-content;
 	height: 100%;
 	text-wrap: balance;
@@ -46,7 +47,7 @@ body {
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 1.5em;
-		justify-content: center;
+		width: max-content;
 
 		button {
 			padding: 0.5em 2em;
@@ -54,6 +55,7 @@ body {
 			border: 1px solid #445;
 			border-radius: 0.5em;
 			color: #ccc;
+			width: max-content;
 			cursor: pointer;
 		}
 
