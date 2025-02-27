@@ -73,12 +73,10 @@ export class Resource extends LitElement {
 
 	public renderContents() {
 		return html`
-			<div class="content-header">
-				<h1>${this.icon ? html`<span class="content-icon">${icons[this.icon]}</span>` : nothing} ${this.title}</h1>
+			<div class="header">
+				<h1>${this.title}</h1>
 			</div>
-			<div class="content-body">
-				<div class="resource-content">${this.contents}</div>
-			</div>
+			<div class="body">${this.contents}</div>
 		`;
 	}
 }

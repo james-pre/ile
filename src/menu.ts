@@ -1,6 +1,3 @@
-import { html, render, nothing } from 'lit';
-import * as resources from './resource.js';
-
 /**
  * Initialize the menu
  */

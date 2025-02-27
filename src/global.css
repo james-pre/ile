@@ -27,15 +27,13 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
+	grid-column: 1;
 	background: #111;
 	border-right: 1px solid #333;
 	width: max-content;
 	height: 100%;
 	text-wrap: balance;
-	position: fixed;
 	overflow: hidden;
-	top: 0;
-	left: 0;
 	resize: horizontal;
 
 	.main {
@@ -97,40 +95,42 @@ body {
 	}
 }
 
-/* Main content styles */
+#content {
+	grid-column: 2;
+	overflow: scroll;
+	padding: 1em;
 
-.content-header {
-	margin-bottom: 1.5em;
-	border-bottom: 1px solid #333;
-	padding-bottom: 0.5em;
+	.header {
+		margin-bottom: 1.5em;
+		border-bottom: 1px solid #333;
+		padding-bottom: 0.5em;
 
-	h1 {
-		font-size: 1.8em;
-		color: #fff;
-		margin-bottom: 0.5em;
-		display: flex;
+		h1 {
+			font-size: 1.8em;
+			color: #fff;
+			margin-bottom: 0.5em;
+			display: flex;
+			align-items: center;
+			gap: 0.5em;
+		}
+	}
+
+	.icon {
+		display: inline-flex;
 		align-items: center;
-		gap: 0.5em;
+		justify-content: center;
+
+		svg {
+			width: 1.5em;
+			height: 1.5em;
+		}
+	}
+
+	.body {
+		line-height: 1.6;
+
+		p {
+			margin-bottom: 1em;
+		}
 	}
 }
-
-.content-icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-
-	svg {
-		width: 1.5em;
-		height: 1.5em;
-	}
-}
-
-.content-body {
-	line-height: 1.6;
-
-	p {
-		margin-bottom: 1em;
-	}
-}
-
-/* Resource list styling */
