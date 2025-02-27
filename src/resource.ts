@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { css, html, LitElement, nothing, render, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { parse as parseMD } from 'marked';
@@ -76,11 +77,9 @@ export class Resource extends LitElement {
 
 	public accessor contents: string = '';
 
-	protected _renderedContents?: TemplateResult | string;
-
 	public constructor() {
 		super();
-		this.id = 'resource-' + Date.now();
+		this.id = Date.now() + Math.random().toString(36).substring(2, 15);
 		document.querySelector<HTMLElement>('#resources')!.prepend(this);
 	}
 
@@ -88,37 +87,57 @@ export class Resource extends LitElement {
 		return html`<div @click=${this.select}>${this.kind ? icons[this.kind] : nothing} ${this.title}</div> `;
 	}
 
-	protected renderContents() {
+	protected renderContents(): HTMLElement {
+		console.debug('rendered', this.id);
 		switch (this.kind) {
-			case 'generic':
-				return this.contents;
+			case 'generic': {
+				const p = document.createElement('p');
+				p.textContent = this.contents;
+				return p;
+			}
 			case 'document': {
+				const container = document.createElement('div');
 				const md = parseMD(this.contents, { async: false });
-				return html(Object.assign([md], { raw: [md] }) as TemplateStringsArray);
+				container.innerHTML = md;
+				return container;
 			}
 			case 'audio':
-			case 'video':
-				return html`<video src="${this.contents}" controls></video>`;
-			case 'website':
+			case 'video': {
+				const video = document.createElement('video');
+				video.src = this.contents;
+				video.controls = true;
+				return video;
+			}
+			case 'website': {
 				// iframe
-				return html`<iframe src="${this.contents}" width="100%" height="100%"></iframe>`;
+				const iframe = document.createElement('iframe');
+				iframe.src = this.contents;
+				iframe.width = '100%';
+				iframe.height = '100%';
+				return iframe;
+			}
 		}
 	}
 
+	private _contentsElement?: HTMLElement;
+
 	protected select = () => {
-		this._renderedContents ??= this.renderContents();
 		document.querySelectorAll<Resource>('ile-resource.selected').forEach(resource => resource.classList.remove('selected'));
 		this.classList.add('selected');
 
-		render(
-			html`
-				<div class="header">
-					<h1>${this.title}</h1>
-				</div>
-				<div class="body" kind="${this.kind}">${this._renderedContents}</div>
-			`,
-			document.querySelector<HTMLElement>('#content')!
-		);
+		const content = document.querySelector<HTMLElement>('#content')!;
+
+		for (const child of Array.from(content.children) as HTMLElement[]) {
+			child.style.display = 'none';
+		}
+
+		if (!this._contentsElement) {
+			this._contentsElement = this.renderContents();
+			this._contentsElement.setAttribute('resource', this.id);
+			content.appendChild(this._contentsElement);
+		}
+
+		this._contentsElement.style.display = 'block';
 	};
 }
 
