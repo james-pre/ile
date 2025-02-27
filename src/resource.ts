@@ -1,4 +1,4 @@
-import { css, html, LitElement, nothing, render } from 'lit';
+import { css, html, LitElement, nothing, render, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { parse as parseMD } from 'marked';
 import * as ai from './ai.js';
@@ -74,21 +74,9 @@ export class Resource extends LitElement {
 
 	@property() public accessor title: string = '';
 
-	@property() public accessor contents: string = '';
+	public accessor contents: string = '';
 
-	protected select = () => {
-		document.querySelectorAll<Resource>('ile-resource.selected').forEach(resource => resource.classList.remove('selected'));
-		this.classList.add('selected');
-		render(
-			html`
-				<div class="header">
-					<h1>${this.title}</h1>
-				</div>
-				<div class="body" kind="${this.kind}">${this.renderContents()}</div>
-			`,
-			document.querySelector<HTMLElement>('#content')!
-		);
-	};
+	protected _renderedContents?: TemplateResult | string;
 
 	public constructor() {
 		super();
@@ -100,7 +88,7 @@ export class Resource extends LitElement {
 		return html`<div @click=${this.select}>${this.kind ? icons[this.kind] : nothing} ${this.title}</div> `;
 	}
 
-	public renderContents() {
+	protected renderContents() {
 		switch (this.kind) {
 			case 'generic':
 				return this.contents;
@@ -116,6 +104,22 @@ export class Resource extends LitElement {
 				return html`<iframe src="${this.contents}" width="100%" height="100%"></iframe>`;
 		}
 	}
+
+	protected select = () => {
+		this._renderedContents ??= this.renderContents();
+		document.querySelectorAll<Resource>('ile-resource.selected').forEach(resource => resource.classList.remove('selected'));
+		this.classList.add('selected');
+
+		render(
+			html`
+				<div class="header">
+					<h1>${this.title}</h1>
+				</div>
+				<div class="body" kind="${this.kind}">${this._renderedContents}</div>
+			`,
+			document.querySelector<HTMLElement>('#content')!
+		);
+	};
 }
 
 /**

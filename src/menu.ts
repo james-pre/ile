@@ -23,5 +23,9 @@ export function switchSidebar(target: string): void {
 		child.style.display = 'none';
 	});
 
+	document.querySelector('#sidebar-menu .active')?.classList.remove('active');
+
+	document.querySelector('#sidebar-menu .' + target)!.classList.add('active');
+
 	sidebar.querySelector<HTMLElement>('#' + target)!.style.display = 'flex';
 }

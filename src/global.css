@@ -71,21 +71,25 @@ body {
 	border-bottom: 1px solid #333;
 
 	width: 100%;
-	padding: 1em;
 	overflow-x: scroll;
 
 	div {
 		color: #ccc;
-		width: 2.5em;
-		height: 2.5em;
+		width: 3.5em;
+		height: 3.5em;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		padding: 0.5em;
 	}
 
 	div:hover {
 		background: #333;
+	}
+
+	.active {
+		border-bottom: 2px solid #ccc;
 	}
 }
 
