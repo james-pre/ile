@@ -58,7 +58,7 @@ export class Resource extends LitElement {
 		}
 
 		div {
-			padding: 0.25em 0.75em;
+			padding: 0.25em 0.75em 0.25em 0.5em;
 		}
 	`;
 
@@ -96,8 +96,10 @@ export class Resource extends LitElement {
 		switch (this.kind) {
 			case 'generic':
 				return this.contents;
-			case 'document':
-				return parseMD(this.contents);
+			case 'document': {
+				const md = parseMD(this.contents, { async: false });
+				return html(Object.assign([md], { raw: [md] }) as TemplateStringsArray);
+			}
 			case 'audio':
 			case 'video':
 				return html`<video src="${this.contents}" controls></video>`;

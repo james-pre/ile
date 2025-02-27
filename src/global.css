@@ -8,8 +8,6 @@
 
 * {
 	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
 	font-family: sans-serif;
 }
 
@@ -20,6 +18,8 @@ body {
 	grid-template-columns: max-content 1fr;
 	inset: 0;
 	position: fixed;
+	margin: 0;
+	padding: 0;
 }
 
 /* Sidebar styles */
@@ -100,7 +100,7 @@ body {
 #content {
 	grid-column: 2;
 	overflow: scroll;
-	padding: 1em;
+	margin: 1em;
 
 	.header {
 		margin-bottom: 1.5em;
