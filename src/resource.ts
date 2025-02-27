@@ -1,13 +1,16 @@
 import { css, html, LitElement, nothing, render } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { parse as parseMD } from 'marked';
 
 // Resource icons
 export const icons = {
-	video: html`<svg viewBox="0 0 24 24" width="24" height="24">
-		<rect x="2" y="4" width="20" height="16" rx="2" ry="2" fill="var(--icon-bg)" />
-		<polygon points="10,8 16,12 10,16" fill="var(--icon-fg)" />
+	// Generic file
+	generic: html`<svg viewBox="0 0 24 24" width="24" height="24">
+		<path d="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z" fill="var(--icon-bg)" />
+		<path d="M14,8V2.5L19.5,8H14z" fill="var(--icon-fg)" />
 	</svg>`,
 
+	// A document. Will be parsed as markdown
 	document: html`<svg viewBox="0 0 24 24" width="24" height="24">
 		<path d="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z" fill="var(--icon-bg)" />
 		<path d="M14,8V2.5L19.5,8H14z" fill="var(--icon-fg)" />
@@ -15,9 +18,19 @@ export const icons = {
 		<rect x="6" y="15" width="12" height="1" rx="0.5" fill="var(--icon-fg)" />
 		<rect x="6" y="18" width="8" height="1" rx="0.5" fill="var(--icon-fg)" />
 	</svg>`,
+
+	audio: html`<svg viewBox="0 0 24 24" width="24" height="24">
+		<rect x="2" y="4" width="20" height="16" rx="2" ry="2" fill="var(--icon-bg)" />
+		<polygon points="10,8 16,12 10,16" fill="var(--icon-fg)" />
+	</svg>`,
+
+	video: html`<svg viewBox="0 0 24 24" width="24" height="24">
+		<rect x="2" y="4" width="20" height="16" rx="2" ry="2" fill="var(--icon-bg)" />
+		<polygon points="10,8 16,12 10,16" fill="var(--icon-fg)" />
+	</svg>`,
 };
 
-export type Icon = null | keyof typeof icons;
+export type Kind = keyof typeof icons;
 
 /**
  * A resource in the resource list
@@ -49,7 +62,7 @@ export class Resource extends LitElement {
 		}
 	`;
 
-	@property() public accessor icon: Icon = null;
+	@property() public accessor kind: Kind = 'generic';
 
 	@property() public accessor title: string = '';
 
@@ -58,7 +71,15 @@ export class Resource extends LitElement {
 	protected select = () => {
 		document.querySelectorAll<Resource>('ile-resource.selected').forEach(resource => resource.classList.remove('selected'));
 		this.classList.add('selected');
-		render(this.renderContents(), document.querySelector<HTMLElement>('#content')!);
+		render(
+			html`
+				<div class="header">
+					<h1>${this.title}</h1>
+				</div>
+				<div class="body">${this.renderContents()}</div>
+			`,
+			document.querySelector<HTMLElement>('#content')!
+		);
 	};
 
 	public constructor() {
@@ -68,16 +89,19 @@ export class Resource extends LitElement {
 	}
 
 	public render() {
-		return html`<div @click=${this.select}>${this.icon ? icons[this.icon] : nothing} ${this.title}</div> `;
+		return html`<div @click=${this.select}>${this.kind ? icons[this.kind] : nothing} ${this.title}</div> `;
 	}
 
 	public renderContents() {
-		return html`
-			<div class="header">
-				<h1>${this.title}</h1>
-			</div>
-			<div class="body">${this.contents}</div>
-		`;
+		switch (this.kind) {
+			case 'generic':
+				return this.contents;
+			case 'document':
+				return parseMD(this.contents);
+			case 'audio':
+			case 'video':
+				return html`<video src="${this.contents}" controls></video>`;
+		}
 	}
 }
 
@@ -90,7 +114,7 @@ export class Resource extends LitElement {
 export function addDocument(title: string, contents: string = ''): Resource {
 	if (!title) throw new Error('Resource title is required');
 	const resource = new Resource();
-	resource.icon = 'document';
+	resource.kind = 'document';
 	resource.title = title;
 	resource.contents = contents || '';
 
