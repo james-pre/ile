@@ -85,7 +85,7 @@ export class Resource extends LitElement {
 	public constructor() {
 		super();
 		this.id = 'resource-' + Date.now();
-		document.querySelector<HTMLElement>('#resources')!.appendChild(this);
+		document.querySelector<HTMLElement>('#resources')!.prepend(this);
 	}
 
 	public render() {
