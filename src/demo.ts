@@ -28,8 +28,8 @@ This is a place for personal notes and observations.
 
 addDocument(
 	'Lecture Notes',
-	`# Lecture Notes: Advanced Understanding of Neuropathy
-Date: June 15, 2023
+	`# Advanced Understanding of Neuropathy
+Date: June 15, 2023  
 Presenter: Dr. Sarah Johnson
 
 ## Key Points
