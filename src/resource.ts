@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { css, html, LitElement, nothing, render, type TemplateResult } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { parse as parseMD } from 'marked';
 import * as ai from './ai.js';
@@ -9,6 +8,15 @@ export const icons = {
 	generic: html`<svg viewBox="0 0 24 24" width="24" height="24">
 		<path d="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z" fill="var(--icon-bg)" />
 		<path d="M14,8V2.5L19.5,8H14z" fill="var(--icon-fg)" />
+	</svg>`,
+
+	// without the corner fold
+	plain: html`<svg viewBox="0 0 24 24" width="24" height="24">
+		<rect x="4" y="2" width="16" height="20" rx="2" ry="2" fill="var(--icon-bg)" />
+		<rect x="7" y="6" width="10" height="1" rx="0.5" fill="var(--icon-fg)" />
+		<rect x="7" y="9" width="10" height="1" rx="0.5" fill="var(--icon-fg)" />
+		<rect x="7" y="12" width="10" height="1" rx="0.5" fill="var(--icon-fg)" />
+		<rect x="7" y="15" width="7" height="1" rx="0.5" fill="var(--icon-fg)" />
 	</svg>`,
 
 	// A document. Will be parsed as markdown
@@ -91,8 +99,24 @@ export class Resource extends LitElement {
 		console.debug('rendered', this.id);
 		switch (this.kind) {
 			case 'generic': {
+				const a = document.createElement('a');
+				a.href = this.contents;
+				a.download = this.title;
+				return a;
+			}
+
+			case 'plain': {
 				const p = document.createElement('p');
-				p.textContent = this.contents;
+				p.innerHTML = this.contents
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace('>', '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#x27;')
+					.replace(/\//g, '&#x2F;')
+					.replace(/\n/g, '<br>');
+				p.setAttribute('contenteditable', 'true');
+				p.style.outline = 'none';
 				return p;
 			}
 			case 'document': {
@@ -114,6 +138,7 @@ export class Resource extends LitElement {
 				iframe.src = this.contents;
 				iframe.width = '100%';
 				iframe.height = '100%';
+				iframe.style.border = '1px solid #5555';
 				return iframe;
 			}
 		}
@@ -139,6 +164,20 @@ export class Resource extends LitElement {
 
 		this._contentsElement.style.display = 'block';
 	};
+}
+
+/**
+ * Add a new text resource
+ * @param title - The title of the resource
+ * @param contents - The full contents of the resource
+ * @returns The newly created resource
+ */
+export function addText(title: string, contents: string = ''): Resource {
+	const resource = new Resource();
+	resource.kind = 'plain';
+	resource.title = title;
+	resource.contents = contents || '';
+	return resource;
 }
 
 /**

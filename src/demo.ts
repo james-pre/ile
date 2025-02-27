@@ -1,19 +1,19 @@
-import { addDocument, addWebsite } from './resource.js';
+import { addDocument, addWebsite, addText } from './resource.js';
 
 addWebsite('https://en.wikipedia.org/wiki/Peripheral_neuropathy', 'Peripheral Neuropathy');
 
-addDocument(
-	'My Custom Doc',
-	`# My Custom Notes
+addText(
+	'Thoughts on Neuropathy',
+	`# My Thoughts
 
 This is a place for personal notes and observations.
 
-## Topics to Research
+Topics to Research:
 - Treatment options for neuropathy
 - Preventative measures
 - Latest research findings
 
-## Questions for Next Appointment
+Questions for Next Appointment:
 1. What are the long-term prognosis?
 2. Are there any lifestyle changes recommended?
 3. Should I consider physical therapy?`
