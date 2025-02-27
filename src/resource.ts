@@ -58,7 +58,7 @@ export class Resource extends LitElement {
 		}
 
 		div {
-			padding: 0.25em;
+			padding: 0.25em 0.75em;
 		}
 	`;
 
