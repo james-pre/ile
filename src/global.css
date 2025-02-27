@@ -1,47 +1,135 @@
 /* Global styles */
 
+:root {
+	/* Icon colors */
+	--icon-bg: #333;
+	--icon-fg: #ccc;
+}
+
 * {
-	background: #555;
-	color: #ccc;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 	font-family: sans-serif;
 }
 
-#tabs {
+body {
 	display: flex;
-	border: 1px solid #666;
-	flex-direction: row;
-	gap: 1em;
-	position: fixed;
-	top: 0em;
-	left: 0;
-	width: 20em;
-	height: 4em;
-	align-items: center;
-	padding: 0 1em;
+	min-height: 100vh;
+	background: #111;
+	color: #ccc;
 }
 
-.tab {
-	border: 1px solid #999;
-	border-radius: 0.5em;
+/* Sidebar styles */
+#sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+	background: #111;
+	border-right: 1px solid #333;
+	width: 200px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+#sidebar-menu {
+	display: flex;
+	gap: 0.5em;
 	padding: 1em;
-	height: 1em;
+	border-bottom: 1px solid #333;
+
+	div {
+		color: #ccc;
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+
+	div:hover {
+		background: #333;
+	}
 }
 
 #resources {
 	display: flex;
-	border: 1px solid #666;
 	flex-direction: column;
-	gap: 1em;
-	padding: 1em;
-	position: fixed;
-	top: 4em;
-	left: 0;
-	width: 20em;
-	height: calc(100% - 4em);
+	gap: 0.5em;
+
+	.header button {
+		margin: 0.5em;
+	}
 }
 
-.resource {
-	border: 1px solid #999;
-	border-radius: 0.5em;
-	padding: 1em;
+/* Main content styles */
+.sidebar.main {
+	display: none;
+	flex-direction: column;
+	padding: 2em;
+	margin-left: 200px;
+	width: calc(100% - 200px);
+	min-height: 100%;
+}
+
+.content-header {
+	margin-bottom: 1.5em;
+	border-bottom: 1px solid #333;
+	padding-bottom: 0.5em;
+}
+
+.content-header h1 {
+	font-size: 1.8em;
+	color: #fff;
+	margin-bottom: 0.5em;
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.content-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.content-icon svg {
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.content-body {
+	line-height: 1.6;
+}
+
+.content-body p {
+	margin-bottom: 1em;
+}
+
+/* Resource list styling */
+#sidebar .main .header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5em;
+}
+
+#sidebar .main .header h2 {
+	color: #fff;
+}
+
+#sidebar .main .header button {
+	padding: 0.5em 1em;
+	background: #224;
+	border: 1px solid #446;
+	border-radius: 4px;
+	color: #ccc;
+	cursor: pointer;
+}
+
+#sidebar .main .header button:hover {
+	background: #335;
 }

@@ -4,18 +4,46 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>ILE</title>
-		<link rel="stylesheet" href="global.css" />
+		<link rel="stylesheet" href="./global.css" />
 	</head>
 	<body>
-		<div id="sidebar menu">
-			<div class="tab">W</div>
-			<div class="tab">R</div>
+		<div id="sidebar">
+			<div id="sidebar-menu">
+				<div class="resources">
+					<svg viewBox="0 0 24 24">
+						<rect x="3" y="2" width="18" height="20" rx="2" ry="2" fill="var(--icon-bg)" />
+						<rect x="5" y="5" width="14" height="2" rx="1" fill="var(--icon-fg)" />
+						<rect x="5" y="9" width="14" height="2" rx="1" fill="var(--icon-fg)" />
+						<rect x="5" y="13" width="14" height="2" rx="1" fill="var(--icon-fg)" />
+						<rect x="5" y="17" width="10" height="2" rx="1" fill="var(--icon-fg)" />
+					</svg>
+				</div>
+				<div class="projects">
+					<svg viewBox="0 0 24 24">
+						<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="var(--icon-bg)" />
+						<rect x="6" y="6" width="5" height="5" rx="1" fill="var(--icon-fg)" />
+						<rect x="13" y="6" width="5" height="5" rx="1" fill="var(--icon-fg)" />
+						<rect x="6" y="13" width="5" height="5" rx="1" fill="var(--icon-fg)" />
+						<rect x="13" y="13" width="5" height="5" rx="1" fill="var(--icon-fg)" />
+					</svg>
+				</div>
+			</div>
+
+			<div class="main" id="projects">
+				<p>Your project workspace will appear here.</p>
+			</div>
+
+			<!-- Sidebar for list of resources -->
+			<div class="main" id="resources">
+				<div class="header">
+					<button class="add">+</button>
+				</div>
+			</div>
 		</div>
-		<div class="sidebar main" id="project"></div>
-		<div class="sidebar main" id="resources">
-			<div class="resource">Resource 1</div>
-			<div class="resource">Resource 2</div>
-		</div>
-		<script src="app.ts"></script>
+
+		<!-- Main content area -->
+		<div id="content"></div>
+
+		<script type="module" src="./app.ts"></script>
 	</body>
 </html>
