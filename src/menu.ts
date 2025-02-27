@@ -17,23 +17,6 @@ export function init(): void {
 }
 
 /**
- * Display a resource's content in the main area
- */
-export function displayContents(resource: resources.Resource): void {
-	render(
-		html`
-			<div class="content-header">
-				<h1>${resource.icon ? html`<span class="content-icon">${resources.icons[resource.icon]}</span>` : nothing} ${resource.title}</h1>
-			</div>
-			<div class="content-body">
-				<div class="resource-content">${resource.contents}</div>
-			</div>
-		`,
-		document.querySelector<HTMLElement>('#content')!
-	);
-}
-
-/**
  * Switch between sidebars
  */
 export function switchSidebar(target: string): void {
@@ -43,5 +26,5 @@ export function switchSidebar(target: string): void {
 		child.style.display = 'none';
 	});
 
-	sidebar.querySelector<HTMLElement>('#' + target)!.style.display = 'block';
+	sidebar.querySelector<HTMLElement>('#' + target)!.style.display = 'flex';
 }

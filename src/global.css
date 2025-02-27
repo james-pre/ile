@@ -14,10 +14,12 @@
 }
 
 body {
-	display: flex;
-	min-height: 100vh;
 	background: #111;
 	color: #ccc;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	inset: 0;
+	position: fixed;
 }
 
 /* Sidebar styles */
@@ -27,18 +29,48 @@ body {
 	gap: 0.5em;
 	background: #111;
 	border-right: 1px solid #333;
-	width: 200px;
+	width: max-content;
 	height: 100%;
+	text-wrap: balance;
 	position: fixed;
+	overflow: hidden;
 	top: 0;
 	left: 0;
+	resize: horizontal;
+
+	.main {
+		padding: 0 1em;
+	}
+
+	.main .header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5em;
+
+		button {
+			padding: 0.5em 1em;
+			background: #222;
+			border: 1px solid #446;
+			border-radius: 4px;
+			color: #ccc;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background: #335;
+		}
+	}
 }
 
 #sidebar-menu {
 	display: flex;
 	gap: 0.5em;
-	padding: 1em;
 	border-bottom: 1px solid #333;
+
+	width: 100%;
+	padding: 1em;
+	overflow-x: scroll;
 
 	div {
 		color: #ccc;
@@ -66,70 +98,39 @@ body {
 }
 
 /* Main content styles */
-.sidebar.main {
-	display: none;
-	flex-direction: column;
-	padding: 2em;
-	margin-left: 200px;
-	width: calc(100% - 200px);
-	min-height: 100%;
-}
 
 .content-header {
 	margin-bottom: 1.5em;
 	border-bottom: 1px solid #333;
 	padding-bottom: 0.5em;
-}
 
-.content-header h1 {
-	font-size: 1.8em;
-	color: #fff;
-	margin-bottom: 0.5em;
-	display: flex;
-	align-items: center;
-	gap: 0.5em;
+	h1 {
+		font-size: 1.8em;
+		color: #fff;
+		margin-bottom: 0.5em;
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+	}
 }
 
 .content-icon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-}
 
-.content-icon svg {
-	width: 1.5em;
-	height: 1.5em;
+	svg {
+		width: 1.5em;
+		height: 1.5em;
+	}
 }
 
 .content-body {
 	line-height: 1.6;
-}
 
-.content-body p {
-	margin-bottom: 1em;
+	p {
+		margin-bottom: 1em;
+	}
 }
 
 /* Resource list styling */
-#sidebar .main .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 1.5em;
-}
-
-#sidebar .main .header h2 {
-	color: #fff;
-}
-
-#sidebar .main .header button {
-	padding: 0.5em 1em;
-	background: #224;
-	border: 1px solid #446;
-	border-radius: 4px;
-	color: #ccc;
-	cursor: pointer;
-}
-
-#sidebar .main .header button:hover {
-	background: #335;
-}

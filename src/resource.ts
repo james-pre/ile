@@ -1,6 +1,5 @@
-import { css, html, LitElement, nothing } from 'lit';
+import { css, html, LitElement, nothing, render } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { displayContents } from './menu.js';
 
 // Resource icons
 export const icons = {
@@ -30,8 +29,7 @@ export class Resource extends LitElement {
 			display: flex;
 			align-items: center;
 			gap: 0.5em;
-			padding: 0.75em;
-			border-radius: 4px;
+			border-radius: 0.5em;
 			cursor: pointer;
 			border: 1px solid transparent;
 		}
@@ -45,6 +43,10 @@ export class Resource extends LitElement {
 			background: #333;
 			color: #fff;
 		}
+
+		div {
+			padding: 0.25em;
+		}
 	`;
 
 	@property() public accessor icon: Icon = null;
@@ -56,7 +58,7 @@ export class Resource extends LitElement {
 	protected select = () => {
 		document.querySelectorAll<Resource>('ile-resource.selected').forEach(resource => resource.classList.remove('selected'));
 		this.classList.add('selected');
-		displayContents(this);
+		render(this.renderContents(), document.querySelector<HTMLElement>('#content')!);
 	};
 
 	public constructor() {
@@ -67,6 +69,17 @@ export class Resource extends LitElement {
 
 	public render() {
 		return html`<div @click=${this.select}>${this.icon ? icons[this.icon] : nothing} ${this.title}</div> `;
+	}
+
+	public renderContents() {
+		return html`
+			<div class="content-header">
+				<h1>${this.icon ? html`<span class="content-icon">${icons[this.icon]}</span>` : nothing} ${this.title}</h1>
+			</div>
+			<div class="content-body">
+				<div class="resource-content">${this.contents}</div>
+			</div>
+		`;
 	}
 }
 
