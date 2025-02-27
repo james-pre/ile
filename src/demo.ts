@@ -1,13 +1,6 @@
-import { addDocument } from './resource.js';
+import { addDocument, addWebsite } from './resource.js';
 
-addDocument(
-	// Credit to Wikipedia
-	'Neuropathy',
-	`Peripheral neuropathy, often shortened to neuropathy, refers to damage or disease affecting the nerves. 
-	Damage to nerves may impair sensation, movement, gland function, and/or organ function depending on which nerve fibers are affected.
-	
-	Neuropathies affecting motor, sensory, or autonomic nerve fibers result in different symptoms. More than one type of fiber may be affected simultaneously. Peripheral neuropathy may be acute (with sudden onset, rapid progress) or chronic (symptoms begin subtly and progress slowly), and may be reversible or permanent.`
-);
+addWebsite('https://en.wikipedia.org/wiki/Peripheral_neuropathy', 'Peripheral Neuropathy');
 
 addDocument(
 	'My Custom Doc',

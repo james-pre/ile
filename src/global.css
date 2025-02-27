@@ -119,18 +119,11 @@ body {
 		}
 	}
 
-	.icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-
-		svg {
-			width: 1.5em;
-			height: 1.5em;
-		}
+	.body {
+		height: 100%;
 	}
 
-	.body {
+	.body[kind='document'] {
 		line-height: 1.6;
 
 		p {
