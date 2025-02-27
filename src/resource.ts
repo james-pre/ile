@@ -62,7 +62,7 @@ export class Resource extends LitElement {
 
 		:host(.selected) {
 			border: 1px solid #555;
-			background: #333;
+			background: #334;
 			color: #fff;
 		}
 
