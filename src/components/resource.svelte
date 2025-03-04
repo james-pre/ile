@@ -10,7 +10,7 @@
 		selected?: boolean;
 	}
 
-	let { kind = 'generic', title = '' }: ResourceInfo = $props();
+	let { kind = 'generic', title = '' }: any = $props();
 
 	const id = Date.now() + Math.random().toString(36).substring(2, 15);
 </script>

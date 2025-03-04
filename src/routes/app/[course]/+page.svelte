@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Resource, { type ResourceInfo } from '$components/resource.svelte';
 	import Contents from '$components/contents.svelte';
-	import type { PageProps } from './$types';
 
-	const { data }: PageProps = $props();
+	const { data } = $props();
 	const { course, resources } = data;
 
 	let active = $state('resources');
