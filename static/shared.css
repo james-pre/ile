@@ -1,0 +1,10 @@
+:root {
+	/* Icon colors */
+	--icon-bg: #333;
+	--icon-fg: #ccc;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: sans-serif;
+}

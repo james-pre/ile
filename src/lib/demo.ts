@@ -1,10 +1,13 @@
-import { addDocument, addWebsite, addText } from './resource.js';
-
-addWebsite('https://en.wikipedia.org/wiki/Peripheral_neuropathy', 'Peripheral Neuropathy');
-
-addText(
-	'Thoughts on Neuropathy',
-	`# My Thoughts
+export const resources = [
+	{
+		title: 'Peripheral Neuropathy',
+		kind: 'website',
+		contents: 'https://en.wikipedia.org/wiki/Peripheral_neuropathy',
+	},
+	{
+		title: 'Thoughts on Neuropathy',
+		kind: 'plain',
+		contents: `# My Thoughts
 
 This is a place for personal notes and observations.
 
@@ -16,12 +19,12 @@ Topics to Research:
 Questions for Next Appointment:
 1. What are the long-term prognosis?
 2. Are there any lifestyle changes recommended?
-3. Should I consider physical therapy?`
-);
-
-addDocument(
-	'Lecture Notes',
-	`# Advanced Understanding of Neuropathy
+3. Should I consider physical therapy?`,
+	},
+	{
+		title: 'Lecture Notes',
+		kind: 'document',
+		contents: `# Advanced Understanding of Neuropathy
 Date: June 15, 2023  
 Presenter: Dr. Sarah Johnson
 
@@ -41,5 +44,6 @@ Presenter: Dr. Sarah Johnson
 1. Pain management
 2. Blood sugar control for diabetic neuropathy
 3. Physical therapy
-4. Emerging treatments: alpha-lipoic acid, gene therapy`
-);
+4. Emerging treatments: alpha-lipoic acid, gene therapy`,
+	},
+];
