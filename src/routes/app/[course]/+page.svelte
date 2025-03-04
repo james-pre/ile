@@ -1,46 +1,39 @@
 <script lang="ts">
-	import Resource, { type ResourceInfo } from '$components/resource.svelte';
 	import Contents from '$components/contents.svelte';
+	import Icon from '$components/icon.svelte';
+	import type { ResourceInfo } from '$lib/resource.js';
 
 	const { data } = $props();
 	const { course, resources } = data;
 
-	let active = $state('resources');
+	let activeSidebar = $state('resources');
 
-	let activeResource: ResourceInfo | null = $state(null);
+	let activeResourceID: string | undefined = $state();
 </script>
 
 <div id="app">
 	<div id="sidebar">
 		<div id="sidebar-menu">
-			<div class={['resources', active == 'resources' && 'active']} onclick={() => (active = 'resources')}>
-				<svg viewBox="0 0 24 24">
-					<rect x="3" y="2" width="18" height="20" rx="2" ry="2" fill="var(--icon-bg)" />
-					<rect x="5" y="5" width="14" height="2" rx="1" fill="var(--icon-fg)" />
-					<rect x="5" y="9" width="14" height="2" rx="1" fill="var(--icon-fg)" />
-					<rect x="5" y="13" width="14" height="2" rx="1" fill="var(--icon-fg)" />
-					<rect x="5" y="17" width="10" height="2" rx="1" fill="var(--icon-fg)" />
-				</svg>
+			<div class={['resources', activeSidebar == 'resources' && 'active']} onclick={() => (activeSidebar = 'resources')}>
+				<Icon name="resources" size={32} />
 			</div>
-			<div class={['projects', active == 'projects' && 'active']} onclick={() => (active = 'projects')}>
-				<svg viewBox="0 0 24 24">
-					<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="var(--icon-bg)" />
-					<rect x="6" y="6" width="5" height="5" rx="1" fill="var(--icon-fg)" />
-					<rect x="13" y="6" width="5" height="5" rx="1" fill="var(--icon-fg)" />
-					<rect x="6" y="13" width="5" height="5" rx="1" fill="var(--icon-fg)" />
-					<rect x="13" y="13" width="5" height="5" rx="1" fill="var(--icon-fg)" />
-				</svg>
+			<div class={['projects', activeSidebar == 'projects' && 'active']} onclick={() => (activeSidebar = 'projects')}>
+				<Icon name="cubes" size={32} />
 			</div>
 		</div>
 
-		<div class="main" id="projects" style:display={active == 'projects' ? 'flex' : 'none'}>
+		<div class="main" id="projects" style:display={activeSidebar == 'projects' ? 'flex' : 'none'}>
 			<p>Your project workspace will appear here.</p>
 		</div>
 
 		<!-- Sidebar for list of resources -->
-		<div class="main" id="resources" style:display={active == 'resources' ? 'flex' : 'none'}>
+		<div class="main" id="resources" style:display={activeSidebar == 'resources' ? 'flex' : 'none'}>
 			{#each resources as resource}
-				<Resource onclick={() => (activeResource = resource)} {...resource} class={[activeResource == resource && 'selected']} />
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div class={['resource', activeResourceID === resource.id && 'selected']} onclick={() => (activeResourceID = resource.id)}>
+					<Icon name={resource.kind} />
+					{resource.title}
+				</div>
 			{/each}
 			<div class="footer">
 				<button class="add">+ Add</button>
@@ -50,13 +43,13 @@
 
 	<!-- Main content area -->
 	<div id="content">
-		{#if activeResource}
-			<Contents {...activeResource} />
-		{:else}
-			<div id="content-default" style:display="flex" style:align-items="center" style:justify-content="center" style:height="100%" style:color="#aaaa">
-				<p>Open a resource to get started</p>
-			</div>
-		{/if}
+		{#each resources as resource}
+			<Contents {...resource} active={activeResourceID === resource.id} />
+		{/each}
+
+		<div id="content-default" style:display="flex" style:align-items="center" style:justify-content="center" style:height="100%" style:color="#aaaa">
+			<p>Open a resource to get started</p>
+		</div>
 	</div>
 </div>
 
@@ -178,7 +171,21 @@
 		}
 	}
 
-	.selected {
+	.resource {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		border-radius: 0.5em;
+		cursor: pointer;
+		border: 1px solid transparent;
+		padding: 0.25em 0.75em 0.25em 0.5em;
+	}
+
+	.resource:hover {
+		background: #222;
+	}
+
+	.resource.selected {
 		border: 1px solid #555;
 		background: #334;
 		color: #fff;

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { parse as parseMD } from 'marked';
-	import type { ResourceInfo } from './resource.svelte';
+	import type { ResourceInfo } from '$lib/resource';
 
-	const { kind, title, contents }: ResourceInfo = $props();
+	const { kind, title, contents, active }: ResourceInfo & { active: boolean } = $props();
 </script>
 
-<div>
+<div style:display={active ? 'block' : 'none'}>
 	{#if kind === 'generic'}
 		<a href={contents} download={title}>{title}</a>
 	{:else if kind == 'plain'}
