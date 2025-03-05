@@ -9,7 +9,7 @@
 	<title>Your Courses</title>
 </svelte:head>
 
-<User {user} self={true} menu="hover" />
+<User {user} self />
 
 <div id="header">
 	<h1>Your Courses</h1>

@@ -8,7 +8,7 @@ export const users: Record<string, User> = {
 		last_name: 'Doe',
 		email: 'john.doe@example.com',
 		picture: 'https://placehold.co/32',
-		roles: [],
+		roles: ['admin'],
 		friends: ['jane_doe'],
 		settings: {
 			hide_full_name: false,

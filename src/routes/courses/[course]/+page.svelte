@@ -15,7 +15,7 @@
 	<title>{name}</title>
 </svelte:head>
 
-<User user={data.user} self={true} menu="hover" />
+<User user={data.user} self />
 
 {#snippet sidebar_tab_icon(name: string, icon: string)}
 	<div class={[name, activeSidebarTab == name && 'active']} onclick={() => (activeSidebarTab = name)}>

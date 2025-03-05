@@ -1,41 +1,40 @@
 <script lang="ts">
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { Access, type User } from '$lib/data';
 
 	const {
 		user,
 		access = Access.Public,
 		compact = false,
-		menu = false,
 		self = false,
+		menu = self,
 	}: {
 		user: User;
 		access?: Access;
 		/** If true, don't show the picture */
 		compact?: boolean;
 		/** If true, the menu can be opened */
-		menu?: 'hover' | 'click' | false;
+		menu?: boolean;
 		/** Whether the user is viewing their own profile */
 		self?: boolean;
 	} = $props();
 
-	let menuVisible = $state(false);
-
-	const visibility = $derived(menu != 'click' ? null : menuVisible ? 'flex' : 'none');
-
 	const u = self ? '' : '?u=' + user.id;
 </script>
 
-<div onclick={() => menu == 'click' && (menuVisible = !menuVisible)} class={['user', menu, self && 'self']}>
-	{#if !compact && access >= (!self && user.settings.hide_profile_picture ? Access.Protected : Access.Public)}
-		<img src={user.picture} alt={user.first_name} />
-	{/if}
+<div class={['user', menu && 'menu-enabled', self && 'self']}>
+	<div onclick={() => (location.href = '/users/' + user.id)}>
+		{#if !compact && access >= (!self && user.settings.hide_profile_picture ? Access.Protected : Access.Public)}
+			<img src={user.picture} alt={user.first_name} />
+		{/if}
 
-	{user.first_name}
-	{#if self || access >= (user.settings.hide_full_name ? Access.Protected : Access.Friend)}
-		{user.last_name}
-	{/if}
+		{user.first_name}
+		{#if self || access >= (user.settings.hide_full_name ? Access.Protected : Access.Friend)}
+			{user.last_name}
+		{/if}
+	</div>
 
-	<div class="menu" style:display={visibility}>
+	<div class="menu">
 		<a href={'/settings' + u}>Settings</a>
 		<a href={'/friends' + u}>Friends</a>
 		<a href={'/logout' + u}>Logout</a>
@@ -44,7 +43,10 @@
 
 <style>
 	.user {
+		cursor: pointer;
 		padding-bottom: 1em;
+		width: max-content;
+		height: max-content;
 	}
 
 	.self {
@@ -66,11 +68,7 @@
 		width: 100%;
 	}
 
-	.click:hover {
-		cursor: pointer;
-	}
-
-	.hover:hover .menu {
+	.menu-enabled:hover .menu {
 		display: flex;
 	}
 

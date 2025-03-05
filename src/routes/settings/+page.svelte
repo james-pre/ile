@@ -10,7 +10,7 @@
 	<title>Settings</title>
 </svelte:head>
 
-<User {user} self={true} menu="hover" />
+<User {user} self />
 
 <div id="header">
 	<h1>Settings</h1>

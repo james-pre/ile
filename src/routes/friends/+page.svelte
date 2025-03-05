@@ -16,7 +16,7 @@
 	<title>Your Courses</title>
 </svelte:head>
 
-<User {user} self={true} menu="hover" />
+<User {user} self />
 
 <div id="header">
 	<h1>Your Friends</h1>
@@ -43,7 +43,7 @@
 		gap: 1em;
 	}
 
-	.user:not(.self) {
+	:global(.user:not(.self)) {
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
@@ -53,7 +53,7 @@
 		padding: 1em 2em;
 	}
 
-	.user:not(.self):hover {
+	:global(.user:not(.self):hover) {
 		background: #222;
 	}
 </style>
