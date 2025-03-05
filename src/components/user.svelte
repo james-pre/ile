@@ -21,6 +21,8 @@
 	let menuVisible = $state(false);
 
 	const visibility = $derived(menu != 'click' ? null : menuVisible ? 'flex' : 'none');
+
+	const u = self ? '' : '?u=' + user.id;
 </script>
 
 <div onclick={() => menu == 'click' && (menuVisible = !menuVisible)} class={['user', menu, self && 'self']}>
@@ -34,8 +36,9 @@
 	{/if}
 
 	<div class="menu" style:display={visibility}>
-		<a href="{self ? '' : '/u/' + user.id}/settings">Settings</a>
-		<a href="{self ? '' : '/u/' + user.id}/logout">Logout</a>
+		<a href={'/settings' + u}>Settings</a>
+		<a href={'/friends' + u}>Friends</a>
+		<a href={'/logout' + u}>Logout</a>
 	</div>
 </div>
 
