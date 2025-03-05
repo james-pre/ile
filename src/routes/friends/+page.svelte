@@ -1,7 +1,7 @@
 <script lang="ts">
 	import User from '$components/user.svelte';
 	import * as demo from '$lib/demo.js';
-	import { fail } from '@sveltejs/kit';
+	import { Access } from '$lib/data.js';
 
 	const { data } = $props();
 	const { user } = data;
@@ -24,7 +24,7 @@
 
 <div id="friends">
 	{#each user.friends as friend}
-		<User user={__get_user(friend)} />
+		<User user={__get_user(friend)} access={Access.Friend} />
 	{/each}
 </div>
 

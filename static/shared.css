@@ -33,6 +33,7 @@ button:hover {
 
 a {
 	color: #ccd;
+	text-decoration: none;
 }
 
 a:has(button, div) {
