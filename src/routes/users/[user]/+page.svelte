@@ -1,6 +1,7 @@
 <script lang="ts">
 	import User from '$components/user.svelte';
 	import Role from '$components/role.svelte';
+
 	const { data } = $props();
 	const user = data.user!;
 	const viewer = data.viewer!;
@@ -18,6 +19,10 @@
 	<h1>{name}</h1>
 
 	<div id="roles">
+		{#if user.id == viewer.id}
+			<Role id="self" />
+		{/if}
+
 		{#each user.roles as role}
 			<Role id={role} />
 		{/each}
