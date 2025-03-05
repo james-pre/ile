@@ -62,7 +62,7 @@
 	</div>
 </div>
 
-<a href="/app">
+<a href="/courses">
 	<button id="back"> ← Back to courses </button>
 </a>
 

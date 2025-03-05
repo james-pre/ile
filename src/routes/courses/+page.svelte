@@ -17,7 +17,7 @@
 
 <div id="courses">
 	{#each courses as course}
-		<a href="/app/{course.id}">
+		<a href="/courses/{course.id}">
 			<div class="course">
 				{course.name}
 			</div>
