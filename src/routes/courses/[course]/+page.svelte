@@ -17,15 +17,17 @@
 
 <User user={data.user} self={true} menu="hover" />
 
+{#snippet sidebar_tab_icon(name: string, icon: string)}
+	<div class={[name, activeSidebarTab == name && 'active']} onclick={() => (activeSidebarTab = name)}>
+		<Icon name={icon} size={32} />
+	</div>
+{/snippet}
+
 <div id="app">
 	<div id="sidebar">
 		<div id="sidebar-tabs">
-			<div class={['resources', activeSidebarTab == 'resources' && 'active']} onclick={() => (activeSidebarTab = 'resources')}>
-				<Icon name="resources" size={32} />
-			</div>
-			<div class={['projects', activeSidebarTab == 'projects' && 'active']} onclick={() => (activeSidebarTab = 'projects')}>
-				<Icon name="cubes" size={32} />
-			</div>
+			{@render sidebar_tab_icon('resources', 'resources')}
+			{@render sidebar_tab_icon('projects', 'cubes')}
 		</div>
 
 		<div class="main" id="projects" style:display={activeSidebarTab == 'projects' ? 'flex' : 'none'}>
@@ -36,7 +38,6 @@
 			{/each}
 		</div>
 
-		<!-- Sidebar for list of resources -->
 		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
 			{#each resources as resource}
 				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>

@@ -1,31 +1,32 @@
 import type { Course, User } from './data.js';
 import { randomID } from './data.js';
 
-export const john: User = {
-	id: 'john_doe',
-	first_name: 'John',
-	last_name: 'Doe',
-	email: 'john.doe@example.com',
-	picture: 'https://placehold.co/32',
-	roles: [],
-	friends: ['jane_doe'],
-	settings: {
-		hide_full_name: false,
-		hide_profile_picture: false,
+export const users: Record<string, User> = {
+	john_doe: {
+		id: 'john_doe',
+		first_name: 'John',
+		last_name: 'Doe',
+		email: 'john.doe@example.com',
+		picture: 'https://placehold.co/32',
+		roles: [],
+		friends: ['jane_doe'],
+		settings: {
+			hide_full_name: false,
+			hide_profile_picture: false,
+		},
 	},
-};
-
-export const jane: User = {
-	id: 'jane_doe',
-	first_name: 'Jane',
-	last_name: 'Doe',
-	email: 'jane.doe@example.com',
-	picture: 'https://placehold.co/32',
-	roles: [],
-	friends: [],
-	settings: {
-		hide_full_name: false,
-		hide_profile_picture: false,
+	jane_doe: {
+		id: 'jane_doe',
+		first_name: 'Jane',
+		last_name: 'Doe',
+		email: 'jane.doe@example.com',
+		picture: 'https://placehold.co/32',
+		roles: [],
+		friends: [],
+		settings: {
+			hide_full_name: false,
+			hide_profile_picture: false,
+		},
 	},
 };
 

@@ -23,7 +23,7 @@
 	const visibility = $derived(menu != 'click' ? null : menuVisible ? 'flex' : 'none');
 </script>
 
-<div onclick={() => menu == 'click' && (menuVisible = !menuVisible)} class={['user', menu, self && 'corner']}>
+<div onclick={() => menu == 'click' && (menuVisible = !menuVisible)} class={['user', menu, self && 'self']}>
 	{#if !compact && access >= (!self && user.settings.hide_profile_picture ? Access.Protected : Access.Public)}
 		<img src={user.picture} alt={user.first_name} />
 	{/if}
@@ -44,7 +44,7 @@
 		padding-bottom: 1em;
 	}
 
-	.corner {
+	.self {
 		position: fixed;
 		right: 1em;
 		top: 1em;
