@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { Access, type User } from '$lib/data';
 
 	const {
@@ -7,37 +6,30 @@
 		access = Access.Public,
 		compact = false,
 		self = false,
-		menu = self,
 	}: {
 		user: User;
 		access?: Access;
 		/** If true, don't show the picture */
 		compact?: boolean;
-		/** If true, the menu can be opened */
-		menu?: boolean;
 		/** Whether the user is viewing their own profile */
 		self?: boolean;
 	} = $props();
-
-	const u = self ? '' : '?u=' + user.id;
 </script>
 
-<div class={['user', menu && 'menu-enabled', self && 'self']}>
-	<div onclick={() => (location.href = '/users/' + user.id)}>
-		{#if !compact && access >= (!self && user.settings.hide_profile_picture ? Access.Protected : Access.Public)}
-			<img src={user.picture} alt={user.first_name} />
-		{/if}
+<div class={['user', self && 'self']} onclick={e => (e.target as Element).classList.contains('user') && (location.href = '/users/' + user.id)}>
+	{#if !compact && access >= (!self && user.settings.hide_profile_picture ? Access.Protected : Access.Public)}
+		<img src={user.picture} alt={user.first_name} />
+	{/if}
 
-		{user.first_name}
-		{#if self || access >= (user.settings.hide_full_name ? Access.Protected : Access.Friend)}
-			{user.last_name}
-		{/if}
-	</div>
+	{user.first_name}
+	{#if self || access >= (user.settings.hide_full_name ? Access.Protected : Access.Friend)}
+		{user.last_name}
+	{/if}
 
 	<div class="menu">
-		<a href={'/settings' + u}>Settings</a>
-		<a href={'/friends' + u}>Friends</a>
-		<a href={'/logout' + u}>Logout</a>
+		<a href="/settings">Settings</a>
+		<a href="/friends">Friends</a>
+		<a href="/logout">Logout</a>
 	</div>
 </div>
 
@@ -68,7 +60,7 @@
 		width: 100%;
 	}
 
-	.menu-enabled:hover .menu {
+	.self:hover .menu {
 		display: flex;
 	}
 
