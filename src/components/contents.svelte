@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { parse as parseMD } from 'marked';
-	import type { ResourceInfo } from '$lib/resource';
+	import type { Resource } from '$lib/data';
 
-	const { kind, title, contents, active }: ResourceInfo & { active: boolean } = $props();
+	const { kind, title, contents, active }: Resource & { active: boolean } = $props();
 </script>
 
-<div style:display={active ? 'block' : 'none'}>
+<div style:display={active ? 'block' : 'none'} style:height="100%">
 	{#if kind === 'generic'}
 		<a href={contents} download={title}>{title}</a>
 	{:else if kind == 'plain'}
@@ -31,9 +31,3 @@
 		<iframe src={contents} width="100%" height="100%" style:border="1px solid #5555" {title}></iframe>
 	{/if}
 </div>
-
-<style>
-	div {
-		height: 100%;
-	}
-</style>

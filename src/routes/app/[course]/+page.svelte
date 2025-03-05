@@ -1,36 +1,42 @@
 <script lang="ts">
 	import Contents from '$components/contents.svelte';
 	import Icon from '$components/icon.svelte';
-	import type { ResourceInfo } from '$lib/resource.js';
 
 	const { data } = $props();
-	const { course, resources } = data;
+	const { name, resources, projects } = data;
 
-	let activeSidebar = $state('resources');
+	let activeSidebarTab = $state('resources');
 
-	let activeResourceID: string | undefined = $state();
+	let activeItemID: string | undefined = $state();
 </script>
+
+<svelte:head>
+	<title>{name}</title>
+</svelte:head>
 
 <div id="app">
 	<div id="sidebar">
-		<div id="sidebar-menu">
-			<div class={['resources', activeSidebar == 'resources' && 'active']} onclick={() => (activeSidebar = 'resources')}>
+		<div id="sidebar-tabs">
+			<div class={['resources', activeSidebarTab == 'resources' && 'active']} onclick={() => (activeSidebarTab = 'resources')}>
 				<Icon name="resources" size={32} />
 			</div>
-			<div class={['projects', activeSidebar == 'projects' && 'active']} onclick={() => (activeSidebar = 'projects')}>
+			<div class={['projects', activeSidebarTab == 'projects' && 'active']} onclick={() => (activeSidebarTab = 'projects')}>
 				<Icon name="cubes" size={32} />
 			</div>
 		</div>
 
-		<div class="main" id="projects" style:display={activeSidebar == 'projects' ? 'flex' : 'none'}>
-			<p>Your project workspace will appear here.</p>
+		<div class="main" id="projects" style:display={activeSidebarTab == 'projects' ? 'flex' : 'none'}>
+			{#each projects as project}
+				<div class={['project', activeItemID === project.id && 'selected']} onclick={() => (activeItemID = project.id)}>
+					{project.title}
+				</div>
+			{/each}
 		</div>
 
 		<!-- Sidebar for list of resources -->
-		<div class="main" id="resources" style:display={activeSidebar == 'resources' ? 'flex' : 'none'}>
+		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
 			{#each resources as resource}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<div class={['resource', activeResourceID === resource.id && 'selected']} onclick={() => (activeResourceID = resource.id)}>
+				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>
 					<Icon name={resource.kind} />
 					{resource.title}
 				</div>
@@ -44,7 +50,7 @@
 	<!-- Main content area -->
 	<div id="content">
 		{#each resources as resource}
-			<Contents {...resource} active={activeResourceID === resource.id} />
+			<Contents {...resource} active={activeItemID === resource.id} />
 		{/each}
 
 		<div id="content-default" style:display="flex" style:align-items="center" style:justify-content="center" style:height="100%" style:color="#aaaa">
@@ -53,24 +59,10 @@
 	</div>
 </div>
 
-<p id="debug-course">{course}</p>
-
 <style>
-	#debug-course {
-		position: fixed;
-		bottom: 1em;
-		right: 1em;
-		color: #baa;
-		width: max-content;
-	}
-
 	#app {
-		background: #111;
-		color: #ccc;
-		inset: 0;
 		position: fixed;
-		margin: 0;
-		padding: 0;
+		inset: 0;
 		display: grid;
 		grid-template-columns: max-content 1fr;
 	}
@@ -80,7 +72,6 @@
 		flex-direction: column;
 		gap: 0.5em;
 		grid-column: 1;
-		background: #111;
 		border-right: 1px solid #333;
 		min-width: 200px;
 		width: max-content;
@@ -116,11 +107,10 @@
 		}
 	}
 
-	#sidebar-menu {
+	#sidebar-tabs {
 		display: flex;
 		gap: 0.5em;
 		border-bottom: 1px solid #333;
-
 		width: 100%;
 		overflow-x: scroll;
 
@@ -154,21 +144,6 @@
 		grid-column: 2;
 		overflow: scroll;
 		margin: 1em;
-
-		.header {
-			margin-bottom: 1.5em;
-			border-bottom: 1px solid #333;
-			padding-bottom: 0.5em;
-
-			h1 {
-				font-size: 1.8em;
-				color: #fff;
-				margin-bottom: 0.5em;
-				display: flex;
-				align-items: center;
-				gap: 0.5em;
-			}
-		}
 	}
 
 	.resource {
