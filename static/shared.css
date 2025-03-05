@@ -17,3 +17,24 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+button {
+	padding: 0.5em 2em;
+	background: #222;
+	border: 1px solid #445;
+	border-radius: 0.5em;
+	color: #ccc;
+	cursor: pointer;
+}
+
+button:hover {
+	background: #335;
+}
+
+a {
+	color: #ccd;
+}
+
+a:has(button, div) {
+	display: contents;
+}

@@ -5,5 +5,8 @@ import type { PageServerLoadEvent } from './$types';
 export function load({ params }: PageServerLoadEvent) {
 	if (params.course != 'demo') fail(404);
 
-	return demo.course;
+	return {
+		course: demo.course,
+		user: demo.john,
+	};
 }

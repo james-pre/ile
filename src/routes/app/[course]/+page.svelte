@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Contents from '$components/contents.svelte';
 	import Icon from '$components/icon.svelte';
+	import User from '$components/user.svelte';
 
 	const { data } = $props();
-	const { name, resources, projects } = data;
+	const { name, resources, projects } = data.course;
 
 	let activeSidebarTab = $state('resources');
 
@@ -13,6 +14,8 @@
 <svelte:head>
 	<title>{name}</title>
 </svelte:head>
+
+<User user={data.user} self={true} menu="hover" />
 
 <div id="app">
 	<div id="sidebar">
@@ -59,6 +62,10 @@
 	</div>
 </div>
 
+<a href="/app">
+	<button id="back"> ← Back to courses </button>
+</a>
+
 <style>
 	#app {
 		position: fixed;
@@ -92,17 +99,7 @@
 			width: max-content;
 
 			button {
-				padding: 0.5em 2em;
-				background: #222;
-				border: 1px solid #445;
-				border-radius: 0.5em;
-				color: #ccc;
 				width: max-content;
-				cursor: pointer;
-			}
-
-			button:hover {
-				background: #335;
 			}
 		}
 	}
@@ -164,5 +161,11 @@
 		border: 1px solid #555;
 		background: #334;
 		color: #fff;
+	}
+
+	#back {
+		position: fixed;
+		bottom: 1em;
+		left: 1em;
 	}
 </style>

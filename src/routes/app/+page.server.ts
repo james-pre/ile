@@ -7,7 +7,7 @@ export function load({ params }: PageServerLoadEvent): {
 	courses: CourseMetadata[];
 } {
 	return {
-		user: demo.user,
+		user: demo.john,
 		courses: [demo.course],
 	};
 }

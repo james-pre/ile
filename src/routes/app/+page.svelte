@@ -1,4 +1,6 @@
 <script lang="ts">
+	import User from '$components/user.svelte';
+
 	const { data } = $props();
 	const { user, courses } = data;
 </script>
@@ -7,15 +9,19 @@
 	<title>Your Courses</title>
 </svelte:head>
 
+<User {user} self={true} menu="hover" />
+
 <div id="header">
 	<h1>Your Courses</h1>
 </div>
 
 <div id="courses">
 	{#each courses as course}
-		<div class="course" onclick={() => (window.location.href = '/app/' + course.id)}>
-			{course.name}
-		</div>
+		<a href="/app/{course.id}">
+			<div class="course">
+				{course.name}
+			</div>
+		</a>
 	{/each}
 </div>
 
