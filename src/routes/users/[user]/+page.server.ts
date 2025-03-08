@@ -7,5 +7,5 @@ export function load({ params }: PageServerLoadEvent) {
 		return fail(404);
 	}
 
-	return { user: demo.users[params.user], viewer: demo.users.john_doe };
+	return { viewer: demo.users.john_doe };
 }
