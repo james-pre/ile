@@ -23,7 +23,7 @@
 <style>
 	nav {
 		display: flex;
-		gap: 1em;
+		gap: 2em;
 		position: fixed;
 		top: 0;
 		left: 0;
