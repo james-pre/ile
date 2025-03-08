@@ -1,5 +1,4 @@
 <script lang="ts">
-	import User from '$components/user.svelte';
 	import Role from '$components/role.svelte';
 
 	const { data } = $props();
@@ -12,8 +11,6 @@
 <svelte:head>
 	<title>{name}</title>
 </svelte:head>
-
-<User user={viewer} self />
 
 <div id="info">
 	<h1>{name}</h1>
@@ -34,7 +31,7 @@
 
 <style>
 	#info {
-		position: fixed;
+		position: absolute;
 		inset: 0 0 10em;
 		padding: 1em 2em;
 		display: flex;

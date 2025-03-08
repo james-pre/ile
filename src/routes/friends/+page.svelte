@@ -16,33 +16,17 @@
 	<title>Your Courses</title>
 </svelte:head>
 
-<User {user} self />
-
-<div id="header">
+<div class="header">
 	<h1>Your Friends</h1>
 </div>
 
-<div id="friends">
+<div id="friends" class="content">
 	{#each user.friends as friend}
 		<User user={__get_user(friend)} access={Access.Friend} />
 	{/each}
 </div>
 
 <style>
-	#header {
-		position: fixed;
-		inset: 0 0 10em;
-		padding: 1em 2em;
-	}
-
-	#friends {
-		position: fixed;
-		inset: 10em 10em 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
-	}
-
 	:global(.user:not(.self)) {
 		display: flex;
 		align-items: center;

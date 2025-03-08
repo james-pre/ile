@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Contents from '$components/contents.svelte';
 	import Icon from '$components/icon.svelte';
-	import User from '$components/user.svelte';
 
 	const { data } = $props();
 	const { name, resources, projects } = data.course;
@@ -14,8 +13,6 @@
 <svelte:head>
 	<title>{name}</title>
 </svelte:head>
-
-<User user={data.user} self />
 
 {#snippet sidebar_tab_icon(name: string, icon: string)}
 	<div class={[name, activeSidebarTab == name && 'active']} onclick={() => (activeSidebarTab = name)}>
@@ -69,7 +66,7 @@
 
 <style>
 	#app {
-		position: fixed;
+		position: absolute;
 		inset: 0;
 		display: grid;
 		grid-template-columns: max-content 1fr;

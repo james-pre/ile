@@ -36,16 +36,8 @@
 <style>
 	.user {
 		cursor: pointer;
-		padding-bottom: 1em;
 		width: max-content;
 		height: max-content;
-	}
-
-	.self {
-		position: fixed;
-		right: 1em;
-		top: 1em;
-		z-index: 10;
 	}
 
 	.menu {
@@ -56,8 +48,11 @@
 		border: 1px solid #ccc;
 		border-radius: 0.5em;
 		flex-direction: column;
+		background: #333;
 		gap: 1em;
 		width: 100%;
+		z-index: 20;
+		cursor: auto;
 	}
 
 	.self:hover .menu {

@@ -1,6 +1,5 @@
 import * as demo from '$lib/demo.js';
-import type { PageServerLoadEvent } from './$types';
 
-export function load({ params }: PageServerLoadEvent) {
+export function load() {
 	return { user: demo.users.john_doe };
 }

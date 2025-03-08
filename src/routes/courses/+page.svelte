@@ -1,21 +1,17 @@
 <script lang="ts">
-	import User from '$components/user.svelte';
-
 	const { data } = $props();
-	const { user, courses } = data;
+	const { courses } = data;
 </script>
 
 <svelte:head>
 	<title>Your Courses</title>
 </svelte:head>
 
-<User {user} self />
-
-<div id="header">
+<div class="header">
 	<h1>Your Courses</h1>
 </div>
 
-<div id="courses">
+<div id="courses" class="content">
 	{#each courses as course}
 		<a href="/courses/{course.id}">
 			<div class="course">
@@ -26,20 +22,6 @@
 </div>
 
 <style>
-	#header {
-		position: fixed;
-		inset: 0 0 10em;
-		padding: 1em 2em;
-	}
-
-	#courses {
-		position: fixed;
-		inset: 10em 10em 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
-	}
-
 	.course {
 		display: flex;
 		align-items: center;

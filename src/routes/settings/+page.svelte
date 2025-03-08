@@ -1,5 +1,4 @@
 <script lang="ts">
-	import User from '$components/user.svelte';
 	import { settings } from '$lib/settings.js';
 
 	const { data } = $props();
@@ -9,8 +8,6 @@
 <svelte:head>
 	<title>Settings</title>
 </svelte:head>
-
-<User {user} self />
 
 <div id="header">
 	<h1>Settings</h1>

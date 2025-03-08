@@ -1,13 +1,10 @@
-import type { User, CourseMetadata } from '$lib/data';
-import type { PageServerLoadEvent } from './$types';
+import type { CourseMetadata } from '$lib/data';
 import * as demo from '$lib/demo';
 
-export function load({ params }: PageServerLoadEvent): {
-	user: User;
+export function load(): {
 	courses: CourseMetadata[];
 } {
 	return {
-		user: demo.users.john_doe,
 		courses: [demo.course],
 	};
 }

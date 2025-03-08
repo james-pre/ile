@@ -7,6 +7,5 @@ export function load({ params }: PageServerLoadEvent) {
 
 	return {
 		course: demo.course,
-		user: demo.users.john_doe,
 	};
 }
