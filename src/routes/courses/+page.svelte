@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Icon from '$components/icon.svelte';
+
 	const { data } = $props();
 	const { courses } = data;
 </script>
@@ -19,6 +21,11 @@
 			</div>
 		</a>
 	{/each}
+
+	<div class="button">
+		<Icon name="plus" />
+		New Course
+	</div>
 </div>
 
 <style>

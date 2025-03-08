@@ -45,11 +45,4 @@
 		cursor: pointer;
 		border: 1px solid #9999;
 	}
-
-	.button {
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-		width: max-content;
-	}
 </style>

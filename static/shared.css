@@ -46,3 +46,10 @@ a:has(button, div) {
 	flex-direction: column;
 	gap: 1em;
 }
+
+:where(.content, .content > a) > .button {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	width: max-content;
+}

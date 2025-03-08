@@ -43,7 +43,10 @@
 				</div>
 			{/each}
 			<div class="footer">
-				<button class="add">+ Add</button>
+				<button class="add">
+					<Icon name="plus" />
+					Add
+				</button>
 			</div>
 		</div>
 	</div>
