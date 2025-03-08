@@ -1,16 +1,22 @@
 <script lang="ts">
 	import User from '$components/user.svelte';
-
+	import Icon from '$components/icon.svelte';
 	const { children, data } = $props();
 	const { user } = data;
 </script>
 
 <nav>
+	<a href="/">Home</a>
 	<a href="/courses">Courses</a>
 	<a href="/friends">Friends</a>
 </nav>
 
-<User {user} self />
+<div id="user-menu">
+	<User {user} self />
+	<a id="settings" href="/settings">
+		<Icon name="settings" />
+	</a>
+</div>
 
 {@render children()}
 
@@ -38,11 +44,14 @@
 		padding: 1em 0 0;
 	}
 
-	:global(.user.self) {
+	#user-menu {
+		display: flex;
+		gap: 1em;
 		position: fixed;
 		right: 1em;
 		top: 0.5em;
 		padding-bottom: 1em;
 		z-index: 10;
+		align-items: center;
 	}
 </style>

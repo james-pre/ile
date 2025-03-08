@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { settings } from '$lib/settings.js';
-
+	import Icon from '$components/icon.svelte';
 	const { data } = $props();
 	const { user } = data;
 </script>
@@ -9,11 +9,11 @@
 	<title>Settings</title>
 </svelte:head>
 
-<div id="header">
+<div class="header">
 	<h1>Settings</h1>
 </div>
 
-<div id="settings">
+<div id="settings" class="content">
 	{#each settings as setting}
 		<div class="setting">
 			<label for={setting.id}>{setting.label}</label>
@@ -25,31 +25,31 @@
 			/>
 		</div>
 	{/each}
+
+	<a href="/signout">
+		<div class="button">
+			<Icon name="signout" />
+			Sign out
+		</div>
+	</a>
 </div>
 
 <style>
-	#header {
-		position: fixed;
-		inset: 0 0 10em;
-		padding: 1em 2em;
-	}
-
-	#settings {
-		position: fixed;
-		inset: 10em 10em 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
-	}
-
 	.setting {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		padding: 1em 2em;
 		gap: 0.5em;
+		justify-content: space-between;
 		border-radius: 0.5em;
 		cursor: pointer;
 		border: 1px solid #9999;
-		padding: 1em 2em;
+	}
+
+	.button {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		width: max-content;
 	}
 </style>

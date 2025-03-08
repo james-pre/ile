@@ -9,7 +9,8 @@
 	font-family: sans-serif;
 }
 
-button {
+button,
+.button {
 	padding: 0.5em 2em;
 	background: #222;
 	border: 1px solid #445;
@@ -18,7 +19,8 @@ button {
 	cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.button:hover {
 	background: #335;
 }
 

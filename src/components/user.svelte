@@ -25,12 +25,6 @@
 	{#if self || access >= (user.settings.hide_full_name ? Access.Protected : Access.Friend)}
 		{user.last_name}
 	{/if}
-
-	<div class="menu">
-		<a href="/settings">Settings</a>
-		<a href="/friends">Friends</a>
-		<a href="/logout">Logout</a>
-	</div>
 </div>
 
 <style>
@@ -38,25 +32,6 @@
 		cursor: pointer;
 		width: max-content;
 		height: max-content;
-	}
-
-	.menu {
-		display: none;
-		position: absolute;
-		top: 100%;
-		padding: 1em;
-		border: 1px solid #ccc;
-		border-radius: 0.5em;
-		flex-direction: column;
-		background: #333;
-		gap: 1em;
-		width: 100%;
-		z-index: 20;
-		cursor: auto;
-	}
-
-	.self:hover .menu {
-		display: flex;
 	}
 
 	img {
