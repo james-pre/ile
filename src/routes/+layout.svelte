@@ -23,7 +23,7 @@
 		</a>
 	{/if}
 	<a id="settings" href="/settings">
-		<Icon id="gear-complex" />
+		<Icon id="light/gear-complex" />
 	</a>
 </div>
 

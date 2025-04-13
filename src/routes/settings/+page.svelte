@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { settings } from '$lib/settings.js';
 	import { Icon } from '@axium/server/web';
+	import { redirect } from '@sveltejs/kit';
 
 	const { data } = $props();
 	const { user } = data;
 
-	if (!user) throw goto('/auth/signin');
+	if (!user) redirect(307, '/auth/signin');
 </script>
 
 <svelte:head>
@@ -30,7 +30,7 @@
 		</div>
 	{/each}
 
-	<a href="/signout">
+	<a href="/auth/signout">
 		<div class="button">
 			<Icon id="light/right-from-bracket" />
 			Sign out

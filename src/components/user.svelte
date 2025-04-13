@@ -1,12 +1,13 @@
 <script lang="ts">
-	import type { User } from '@auth/sveltekit';
+	import type { User } from '@axium/core/schemas';
+	import { getUserImage } from '@axium/core';
 
 	const {
 		user,
 		compact = false,
 		self = false,
 	}: {
-		user: User;
+		user: { [K in keyof User]?: User[K] | null };
 		/** If true, don't show the picture */
 		compact?: boolean;
 		/** Whether the user is viewing their own profile */
@@ -16,7 +17,7 @@
 
 <a class={['user', self && 'self']} href="/users/{user.id}">
 	{#if !compact}
-		<img src={user.image} alt={user.name} />
+		<img src={getUserImage(user as Required<User>)} alt={user.name} />
 	{/if}
 
 	{user.name}

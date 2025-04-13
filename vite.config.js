@@ -9,7 +9,7 @@ export default {
 	plugins: [
 		sveltekit(),
 		mkcert({
-			hosts: ['arcronym.localhost'],
+			hosts: ['test.localhost'],
 		}),
 	],
 };
