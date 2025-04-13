@@ -22,7 +22,7 @@
 			</button>
 		</a>
 	{/if}
-	<a id="settings" href="/settings">
+	<a id="account" href="/account">
 		<Icon id="light/gear-complex" />
 	</a>
 </div>

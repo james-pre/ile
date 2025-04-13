@@ -17,7 +17,7 @@ export async function load(event) {
 		}
 	}
 
-	if (user && !user.name && event.url.pathname != '/account/edit/name') redirect(307, '/account/edit/name');
+	if (user && !user.name && event.url.pathname != '/account/name') redirect(307, '/account/name');
 
 	return { session, user };
 }
