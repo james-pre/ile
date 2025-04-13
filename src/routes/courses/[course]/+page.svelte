@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Contents from '$components/contents.svelte';
-	import Icon from '$components/icon.svelte';
+	import { Icon } from '@axium/server/web';
+	import { resourceIcons, type Course } from '$lib/data.js';
 
 	const { data } = $props();
-	const { name, resources, projects } = data.course;
+
+	const { name, resources, projects } = data.course as Course;
 
 	let activeSidebarTab = $state('resources');
 
@@ -16,15 +18,15 @@
 
 {#snippet sidebar_tab_icon(name: string, icon: string)}
 	<div class={[name, activeSidebarTab == name && 'active']} onclick={() => (activeSidebarTab = name)}>
-		<Icon name={icon} size={32} />
+		<Icon id={icon} --size="2em" />
 	</div>
 {/snippet}
 
 <div id="app">
 	<div id="sidebar">
 		<div id="sidebar-tabs">
-			{@render sidebar_tab_icon('resources', 'resources')}
-			{@render sidebar_tab_icon('projects', 'cubes')}
+			{@render sidebar_tab_icon('resources', 'books')}
+			{@render sidebar_tab_icon('projects', 'grid-2')}
 		</div>
 
 		<div class="main" id="projects" style:display={activeSidebarTab == 'projects' ? 'flex' : 'none'}>
@@ -38,13 +40,13 @@
 		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
 			{#each resources as resource}
 				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>
-					<Icon name={resource.kind} />
+					<Icon id={resourceIcons[resource.kind]} />
 					{resource.title}
 				</div>
 			{/each}
 			<div class="footer">
 				<button class="add">
-					<Icon name="plus" />
+					<Icon id="plus" />
 					Add
 				</button>
 			</div>

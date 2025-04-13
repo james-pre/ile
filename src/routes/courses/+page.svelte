@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Icon from '$components/icon.svelte';
+	import { Icon } from '@axium/server/web';
 
 	const { data } = $props();
+
 	const { courses } = data;
 </script>
 
@@ -23,7 +24,7 @@
 	{/each}
 
 	<div class="button">
-		<Icon name="plus" />
+		<Icon id="plus" />
 		New Course
 	</div>
 </div>

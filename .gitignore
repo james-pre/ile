@@ -3,3 +3,5 @@ dist
 tmp
 build
 .svelte-kit
+.env
+*.log

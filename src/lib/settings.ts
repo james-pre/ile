@@ -1,7 +1,7 @@
-import type { User } from './data';
+import type { Preferences } from '@axium/server/auth.js';
 
 export interface Setting {
-	id: keyof User['settings'];
+	id: Exclude<keyof Preferences, `_${string}`>;
 	label: string;
 	description?: string;
 	type: 'checkbox' | 'select' | 'text' | 'range';
@@ -12,15 +12,17 @@ export interface Setting {
 
 export const settings = [
 	{
-		id: 'hide_full_name',
-		label: 'Hide Full Name',
-		description: 'Hide your full name when friends view your profile',
-		type: 'checkbox',
-	},
-	{
-		id: 'hide_profile_picture',
-		label: 'Hide Profile Picture',
-		description: 'Hide your profile picture when friends view your profile',
+		id: 'debug',
+		label: 'Enable Debugging',
+		description: 'View additional information',
 		type: 'checkbox',
 	},
 ] satisfies Setting[];
+
+declare module '@axium/server/auth.js' {
+	export interface Preferences {
+		_friends: string[];
+		_roles: string[];
+		debug: boolean;
+	}
+}

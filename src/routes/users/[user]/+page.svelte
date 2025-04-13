@@ -1,29 +1,26 @@
 <script lang="ts">
 	import Role from '$components/role.svelte';
-
 	const { data } = $props();
-	const user = data.user!;
-	const viewer = data.viewer!;
 
-	const name = viewer.roles.includes('admin') || user.settings ? user.first_name + ' ' + user.last_name : user.first_name;
+	const { user, viewing } = data;
 </script>
 
 <svelte:head>
-	<title>{name}</title>
+	<title>{viewing!.name}</title>
 </svelte:head>
 
 <div id="info">
-	<h1>{name}</h1>
+	<h1>{viewing!.name}</h1>
 
 	<div id="roles">
-		{#if user.id == viewer.id}
+		{#if user?.id == viewing!.id}
 			<Role id="self" />
 		{/if}
 
-		{#each user.roles as role}
-			<Role id={role} />
+		{#each viewing!.preferences._roles as id}
+			<Role {id} />
 		{/each}
-		{#if viewer.friends.includes(user.id)}
+		{#if viewing!.preferences._friends.includes(user?.id!)}
 			<Role id="friend" />
 		{/if}
 	</div>

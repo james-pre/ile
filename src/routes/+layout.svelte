@@ -1,6 +1,6 @@
 <script lang="ts">
 	import User from '$components/user.svelte';
-	import Icon from '$components/icon.svelte';
+	import { Icon } from '@axium/server/web';
 	const { children, data } = $props();
 	const { user } = data;
 </script>
@@ -12,9 +12,18 @@
 </nav>
 
 <div id="user-menu">
-	<User {user} self />
+	{#if user}
+		<User {user} self />
+	{:else}
+		<a href="/auth/signin">
+			<button class="button">
+				<Icon id="light/right-to-bracket" />
+				Sign in
+			</button>
+		</a>
+	{/if}
 	<a id="settings" href="/settings">
-		<Icon name="settings" />
+		<Icon id="gear-complex" />
 	</a>
 </div>
 

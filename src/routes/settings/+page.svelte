@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { settings } from '$lib/settings.js';
-	import Icon from '$components/icon.svelte';
+	import { Icon } from '@axium/server/web';
+
 	const { data } = $props();
 	const { user } = data;
+
+	if (!user) throw goto('/auth/signin');
 </script>
 
 <svelte:head>
@@ -20,7 +24,7 @@
 			<input
 				{...setting}
 				onchange={e => {
-					user.settings[setting.id] = setting.type == 'checkbox' ? e.currentTarget.checked : (e.currentTarget.value as never);
+					user.preferences[setting.id] = setting.type == 'checkbox' ? e.currentTarget.checked : (e.currentTarget.value as never);
 				}}
 			/>
 		</div>
@@ -28,7 +32,7 @@
 
 	<a href="/signout">
 		<div class="button">
-			<Icon name="signout" />
+			<Icon id="light/right-from-bracket" />
 			Sign out
 		</div>
 	</a>

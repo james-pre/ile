@@ -1,11 +1,11 @@
-import * as demo from '$lib/demo.js';
+import { adapter } from '@axium/server/auth.js';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoadEvent } from './$types';
 
-export function load({ params }: PageServerLoadEvent) {
-	if (!(params.user in demo.users)) {
-		return fail(404);
-	}
+export async function load({ params }: PageServerLoadEvent) {
+	const user = await adapter.getUser!(params.user);
 
-	return { viewer: demo.users.john_doe };
+	if (!user) return fail(404, { message: 'User not found' });
+
+	return { viewing: user };
 }
