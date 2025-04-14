@@ -12,7 +12,7 @@
 </svelte:head>
 
 <Account {...props}>
-	<div class="acccount-section main">
+	<div class="account-section main">
 		{#each settings as setting}
 			<div class="setting">
 				<label for={setting.id}>{setting.label}</label>

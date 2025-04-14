@@ -1,0 +1,14 @@
+{
+	"include": ["secrets.json"],
+	"debug": true,
+	"auth": {
+		"secure_cookies": false,
+		"debug": true
+	},
+	"log": {
+		"level": "debug"
+	},
+	"web": {
+		"prefix": "/account"
+	}
+}

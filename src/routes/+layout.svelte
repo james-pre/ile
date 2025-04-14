@@ -45,7 +45,7 @@
 	}
 
 	:global(body) {
-		background: #111;
+		background: #222;
 		color: #ccc;
 		inset: 3em 0 0;
 		position: fixed;
