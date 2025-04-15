@@ -1,10 +1,15 @@
+import type { Session } from '@auth/sveltekit';
+import type { AdapterUser } from '@auth/sveltekit/adapters';
 import { adapter, createAdapter } from '@axium/server/auth.js';
 import * as db from '@axium/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
 createAdapter();
 
-export async function load(event) {
+export async function load(event): Promise<{
+	session: Session | null;
+	user: AdapterUser | null | undefined;
+}> {
 	const session = await event.locals.auth();
 
 	const user = session?.user?.email ? await adapter.getUserByEmail?.(session.user.email) : null;
