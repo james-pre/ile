@@ -20,9 +20,6 @@
 		{#each viewing!.preferences._roles as id}
 			<Role {id} />
 		{/each}
-		{#if viewing!.preferences._friends.includes(user?.id!)}
-			<Role id="friend" />
-		{/if}
 	</div>
 </div>
 

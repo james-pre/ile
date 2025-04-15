@@ -4,6 +4,14 @@ import { adapter } from '@axium/server/auth.js';
 import { pick } from 'utilium';
 import type { PageServerLoadEvent } from './$types';
 
+/**
+ * @todo This will be implemented in the future.
+ * A @axium/social package would work nicely.
+ */
+function getFriendsOf(id: string) {
+	return [];
+}
+
 export async function load(event: PageServerLoadEvent) {
 	const { user, session } = await event.parent();
 
@@ -11,7 +19,7 @@ export async function load(event: PageServerLoadEvent) {
 
 	const friends: Pick<AdapterUser, keyof User>[] = [];
 
-	for (const id of user.preferences._friends) {
+	for (const id of getFriendsOf(user.id)) {
 		const friend = await adapter.getUser!(id);
 		if (!friend) continue;
 		friends.push(pick(friend, Object.keys(User.keyof().enum) as (keyof User)[]));

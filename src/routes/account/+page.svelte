@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { settings } from '$lib/settings.js';
 	import '@axium/server/web/lib/styles.css';
 	import Account from '@axium/server/web/routes/+page.svelte';
@@ -13,16 +14,24 @@
 
 <Account {...props}>
 	<div class="account-section main">
-		{#each settings as setting}
-			<div class="setting">
-				<label for={setting.id}>{setting.label}</label>
-				<input
-					{...setting}
-					onchange={e => {
-						user.preferences[setting.id] = setting.type == 'checkbox' ? e.currentTarget.checked : (e.currentTarget.value as never);
-					}}
-				/>
-			</div>
-		{/each}
+		<form use:enhance action="?/setting">
+			{#each settings as setting}
+				<div class="setting account-item">
+					<label for={setting.id}>{setting.label}</label>
+					<input
+						{...setting}
+						onchange={e => {
+							user.preferences[setting.id] = setting.type == 'checkbox' ? e.currentTarget.checked : (e.currentTarget.value as never);
+						}}
+					/>
+				</div>
+			{/each}
+		</form>
 	</div>
 </Account>
+
+<style>
+	form {
+		display: contents;
+	}
+</style>
