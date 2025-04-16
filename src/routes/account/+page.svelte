@@ -24,12 +24,7 @@
 			{#each userSettings as setting}
 				<div class="setting account-item">
 					<label for={setting.id}>{setting.label}</label>
-					<input
-						{...setting}
-						onchange={e => {
-							data.user!.preferences[setting.id] = setting.type == 'checkbox' ? e.currentTarget.checked : (e.currentTarget.value as never);
-						}}
-					/>
+					<input {...setting} />
 				</div>
 			{/each}
 			<button type="submit">
