@@ -11,7 +11,7 @@ export interface Setting {
 	options?: string[];
 }
 
-export const settings = [
+export const userSettings = [
 	{
 		id: 'debug',
 		label: 'Enable Debugging',
@@ -20,14 +20,19 @@ export const settings = [
 	},
 ] satisfies Setting[];
 
-export const Settings = z.object({
+export const UserSettings = z.object({
 	debug: z.boolean(),
 });
-export type Settings = z.infer<typeof Settings>;
+export type UserSettings = z.infer<typeof UserSettings>;
 
 declare module '@axium/server/auth.js' {
-	export interface Preferences extends Settings {
+	export interface Preferences extends UserSettings {
 		// Internal role tracking
 		_roles: string[];
 	}
 }
+
+export const CourseSettings = z.object({
+	labels: z.array(z.string()),
+});
+export type CourseSettings = z.infer<typeof CourseSettings>;

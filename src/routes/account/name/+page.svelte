@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EditName from '@axium/server/web/routes/name/+page.svelte';
+	import { EditName } from '@axium/server/web';
 	const props = $props();
 </script>
 

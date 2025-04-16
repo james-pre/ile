@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EditEmail from '@axium/server/web/routes/email/+page.svelte';
+	import { EditEmail } from '@axium/server/web';
 	const props = $props();
 </script>
 
