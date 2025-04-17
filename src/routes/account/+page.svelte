@@ -23,16 +23,8 @@
 
 <Account {data} {form}>
 	<div class="account-section main">
-		<form
-			action="?/settings"
-			method="post"
-			use:enhance={() =>
-				async ({ update }) =>
-					update({ reset: false })}
-		>
-			{#if form?.error}
-				<div class="error">{form.error}</div>
-			{/if}
+		<form action="?/settings" method="post" use:enhance={() => _ => _.update({ reset: false })}>
+			{#if form?.error}<div class="error">{form.error}</div>{/if}
 			{#each userSettings as setting}
 				<div class="setting account-item">
 					<label for={setting.name}>{setting.label}</label>

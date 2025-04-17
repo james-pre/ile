@@ -1,5 +1,5 @@
 import { database } from '@axium/server/database.js';
-import { type Course } from './data.js';
+import type { Course, CourseShare, Resource } from './data.js';
 
 export async function getCourses(userId: string): Promise<Course[]> {
 	const result: Course[] = [];
@@ -21,13 +21,18 @@ export async function getCourses(userId: string): Promise<Course[]> {
 	return result;
 }
 
-export async function getCourse(id: string): Promise<Course | undefined> {
+export async function getCourse(id: string, userId?: string): Promise<Required<Course> | undefined> {
 	const course: Course | undefined = await database.withSchema('arc').selectFrom('Course').selectAll().where('id', '=', id).executeTakeFirst();
 	if (!course) return undefined;
 
-	course.shares = await database.withSchema('arc').selectFrom('CourseShare').where('courseId', '=', id).selectAll().execute();
-	course.resources = await database.withSchema('arc').selectFrom('Resource').where('courseId', '=', id).selectAll().execute();
-	return course;
+	const shares = await getCourseShares(id);
+
+	return Object.assign(course, {
+		shares,
+		isShared: shares.some(share => share.userId == userId),
+		resources: await database.withSchema('arc').selectFrom('Resource').where('courseId', '=', id).selectAll().execute(),
+		projects: [],
+	});
 }
 
 export async function createCourse(userId: string, data: Partial<Course> & Pick<Course, 'name'>): Promise<void> {
@@ -52,4 +57,31 @@ export async function shareCourse(courseId: string, userId: string, permission: 
 
 export async function unshareCourse(courseId: string, userId: string): Promise<void> {
 	await database.withSchema('arc').deleteFrom('CourseShare').where('courseId', '=', courseId).where('userId', '=', userId).execute();
+}
+
+export async function getCourseShares(courseId: string): Promise<Required<CourseShare>[]> {
+	const shares = await database.withSchema('arc').selectFrom('CourseShare').where('courseId', '=', courseId).selectAll().execute();
+
+	if (!shares.length) return [];
+
+	const users = await database
+		.selectFrom('User')
+		.selectAll()
+		.where(
+			'id',
+			'in',
+			shares.map(s => s.userId)
+		)
+		.execute();
+
+	const userMap = new Map(users.map(u => [u.id, u]));
+
+	return shares.map(share => ({
+		...share,
+		user: userMap.get(share.userId)!,
+	}));
+}
+
+export async function createResource(data: Partial<Resource> & Pick<Resource, 'userId' | 'courseId' | 'name' | 'type' | 'content'>): Promise<void> {
+	await database.withSchema('arc').insertInto('Resource').values(data).execute();
 }

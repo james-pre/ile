@@ -61,7 +61,7 @@ try {
 		.addColumn('createdAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('modifiedAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('name', 'text', col => col.notNull())
-		.addColumn('kind', 'text', col => col.notNull())
+		.addColumn('type', 'text', col => col.notNull())
 		.addColumn('content', 'text', col => col.notNull())
 		.execute()
 		.then(done)

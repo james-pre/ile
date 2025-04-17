@@ -1,10 +1,9 @@
 import type { Generated } from 'kysely';
-import type { ResourceKind } from './data.js';
 
 export interface DBCourse {
 	id: Generated<string>;
 	name: string;
-	description?: string;
+	description: string | null;
 	userId: string;
 	createdAt: Generated<Date>;
 	visibility: Generated<number>;
@@ -23,10 +22,9 @@ export interface DBResource {
 	courseId: string;
 	userId: string;
 	name: string;
-	kind: ResourceKind;
+	type: string;
 	createdAt: Generated<Date>;
 	modifiedAt: Generated<Date>;
-	title: string;
 	content: string;
 	metadata: Generated<Record<string, unknown>>;
 }

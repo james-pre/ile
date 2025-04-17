@@ -100,13 +100,4 @@
 	:global(button) {
 		outline: none;
 	}
-
-	textarea {
-		resize: none;
-		width: 50em;
-		height: 15em;
-		border-radius: 0.5em;
-		border: 1px solid #9999;
-		outline: none;
-	}
 </style>
