@@ -42,6 +42,10 @@ export async function deleteCourse(id: string): Promise<void> {
 	await database.withSchema('arc').deleteFrom('Course').where('id', '=', id).execute();
 }
 
+export async function updateCourse(course: Partial<Course> & Pick<Course, 'id'>): Promise<void> {
+	await database.withSchema('arc').updateTable('Course').set(course).where('id', '=', course.id).execute();
+}
+
 export async function shareCourse(courseId: string, userId: string, permission: number): Promise<void> {
 	await database.withSchema('arc').insertInto('CourseShare').values({ courseId, userId, permission }).execute();
 }

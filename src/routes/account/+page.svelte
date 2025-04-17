@@ -21,7 +21,7 @@
 	});
 </script>
 
-<Account {data}>
+<Account {data} {form}>
 	<div class="account-section main">
 		<form
 			action="?/settings"

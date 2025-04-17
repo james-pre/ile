@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import Dialog from '$components/dialog.svelte';
 	import type { Course } from '$lib/data.js';
-	import { Icon } from '@axium/server/web';
+	import { FormDialog, Icon } from '@axium/server/web';
 
 	const { form, data } = $props();
 
-	let showCreate = $state(false);
+	let creating = $state(false);
 	let removing: Course | null = $state(null);
-	let showRemove = $derived(!!removing);
+	let editing: Course | null = $state(null);
 
-	$effect(() => {
-		if (!form?.success) return;
-		showCreate = false;
-		removing = null;
-	});
+	function actionHandler(action: string, course: Course) {
+		return (e: MouseEvent) => {
+			e.preventDefault();
+			if (action == 'edit') editing = course;
+			else if (action == 'remove') removing = course;
+		};
+	}
 </script>
 
 <svelte:head>
@@ -27,69 +27,57 @@
 
 <div id="courses" class="content">
 	{#each data.courses as course}
-		<div class="course">
-			<a href="/courses/{course.id}">{course.name}</a>
-			<div class="course-remove" onclick={() => (removing = course)}><Icon i="trash" /></div>
-		</div>
+		<a href="/courses/{course.id}" class="course">
+			<span>{course.name}</span>
+			<span class="subtle">
+				{#if course.description}{course.description}
+				{:else}<i>No description</i>
+				{/if}
+			</span>
+			<div class="action" onclick={actionHandler('edit', course)}><Icon i="pencil" /></div>
+			<div class="action" onclick={actionHandler('remove', course)}><Icon i="trash" /></div>
+		</a>
 	{/each}
 
 	{#if !data.courses.length}
 		<p>You don't have any courses yet.</p>
 	{/if}
 
-	<div class="button" onclick={() => (showCreate = true)}><Icon i="plus" />New Course</div>
+	<div class="button" onclick={() => (creating = true)}><Icon i="plus" />New Course</div>
 </div>
 
-<Dialog bind:show={showRemove}>
-	<form method="POST" action="?/remove" use:enhance>
-		{#if form?.error}
-			<div class="error">{form.error}</div>
-		{/if}
-		<p>
-			Are you sure you want to delete <strong>{removing?.name}</strong>? This action cannot be undone.
-			<br />
-			Deleting a course will remove all of its contents, including any projects and resources.
-		</p>
-		<input type="hidden" name="id" id="course-id" value={removing?.id} />
-		<div class="actions">
-			<button
-				type="button"
-				onclick={e => {
-					e.preventDefault();
-					removing = null;
-				}}>Cancel</button
-			>
-			<button type="submit" class="delete">Delete</button>
-		</div>
-	</form>
-</Dialog>
+<FormDialog bind:active={removing} {form} submitText="Delete" action="?/remove" name="remove">
+	<p>
+		Are you sure you want to delete <strong>{removing?.name}</strong>? This action cannot be undone.
+		<br />
+		Deleting a course will remove all of its contents, including any projects and resources.
+	</p>
+	<input type="hidden" name="id" id="course-id" value={removing?.id} />
+</FormDialog>
 
-<Dialog bind:show={showCreate}>
-	<form class="main" method="POST" action="?/create" use:enhance>
-		{#if form?.error}
-			<div class="error">{form.error}</div>
-		{/if}
-		<div>
-			<label for="name">Course Name</label>
-			<input id="name" name="name" type="text" />
-		</div>
-		<div class="actions">
-			<button
-				class="cancel"
-				onclick={e => {
-					e.preventDefault();
-					showCreate = false;
-				}}>Cancel</button
-			>
-			<button class="create" type="submit">Create</button>
-		</div>
-	</form>
-</Dialog>
+{#snippet courseForm(course?: Course | null)}
+	<div>
+		<label for="name">Course Name</label>
+		<input id="name" name="name" type="text" value={course?.name} />
+	</div>
+	<div>
+		<label for="description">Description</label>
+		<textarea id="description" name="description" value={course?.description}></textarea>
+	</div>
+{/snippet}
+
+<FormDialog bind:active={creating} {form} submitText="Create" action="?/create">
+	{@render courseForm()}
+</FormDialog>
+
+<FormDialog bind:active={editing} {form} submitText="Save" action="?/edit">
+	{@render courseForm(editing)}
+</FormDialog>
 
 <style>
 	.course {
 		display: grid;
-		grid-template-columns: 1fr 2em;
+		grid-template-columns: 1fr 4fr 2em 2em;
 		align-items: center;
 		gap: 0.5em;
 		border-radius: 0.5em;
@@ -101,18 +89,24 @@
 		background: #334;
 	}
 
-	.actions {
-		display: flex;
-		gap: 1em;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	.course-remove {
+	.action {
 		cursor: pointer;
 	}
 
-	.delete {
+	:global(form[name='remove'] button.submit) {
 		background: #733;
+	}
+
+	:global(button) {
+		outline: none;
+	}
+
+	textarea {
+		resize: none;
+		width: 50em;
+		height: 15em;
+		border-radius: 0.5em;
+		border: 1px solid #9999;
+		outline: none;
 	}
 </style>

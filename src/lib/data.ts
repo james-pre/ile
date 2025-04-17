@@ -1,3 +1,5 @@
+import * as z from 'zod';
+
 export function randomID() {
 	return Math.random().toString(36).substring(2);
 }
@@ -56,6 +58,12 @@ export interface Course {
 	resources?: Resource[];
 	projects?: Project[];
 }
+
+export const touchCourse = z.object({
+	id: z.string().uuid().optional(),
+	name: z.string().min(1, 'Course name is required').max(100),
+	description: z.string().max(1000, 'Description must be less than 1000 characters').optional(),
+});
 
 export interface CourseShare {
 	courseId: string;

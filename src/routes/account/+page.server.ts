@@ -1,7 +1,7 @@
 import { UserSettings } from '$lib/settings.js';
 import { adapter } from '@axium/server/auth.js';
 import { web } from '@axium/server/config.js';
-import { parseForm } from '@axium/server/web/server';
+import { editEmail, editName, parseForm } from '@axium/server/web/server';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export async function load(event) {
@@ -25,4 +25,6 @@ export const actions = {
 
 		return { success: true };
 	},
+	name: editName,
+	email: editEmail,
 } satisfies Actions;
