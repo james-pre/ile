@@ -31,8 +31,3 @@ declare module '@axium/server/auth.js' {
 		_roles: string[];
 	}
 }
-
-export const CourseSettings = z.object({
-	labels: z.array(z.string()),
-});
-export type CourseSettings = z.infer<typeof CourseSettings>;

@@ -1,4 +1,3 @@
-import * as demo from '$lib/demo.js';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoadEvent } from './$types';
 

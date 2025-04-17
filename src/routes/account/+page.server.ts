@@ -1,14 +1,14 @@
 import { fail, type Actions } from '@sveltejs/kit';
-import { UserSettings } from '../../lib/settings';
-import { tryZod } from '@axium/server/web/utils.js';
+import { UserSettings } from '../../lib/settings.js';
+import { parseForm } from '@axium/server/web/server';
 import { adapter } from '@axium/server/auth.js';
 
 export const actions = {
 	async settings(event) {
 		const session = await event.locals.auth();
-		if (!session?.user?.email) return fail(401, { error: 'Unauthorized' });
+		if (!session?.user?.email) return fail(401, { error: 'You are not signed in' });
 
-		const [settings, error] = tryZod(UserSettings.safeParse(Object.fromEntries(await event.request.formData())));
+		const [settings, error] = await parseForm(event, UserSettings);
 		if (error) return error;
 
 		const user = await adapter.getUserByEmail!(session.user.email);

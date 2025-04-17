@@ -1,6 +1,7 @@
 import type { AdapterUser } from '@auth/sveltekit/adapters';
 import { User } from '@axium/core/schemas';
 import { adapter } from '@axium/server/auth.js';
+import { loadSession } from '@axium/server/web/server';
 import { pick } from 'utilium';
 import type { PageServerLoadEvent } from './$types';
 
@@ -13,7 +14,8 @@ function getFriendsOf(id: string) {
 }
 
 export async function load(event: PageServerLoadEvent) {
-	const { user, session } = await event.parent();
+	const { session } = await loadSession(event);
+	const { user } = await event.parent();
 
 	if (!user) return { user, session, friends: [] };
 

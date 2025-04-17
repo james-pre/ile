@@ -10,9 +10,7 @@
 	const [name, color] = roles[id as keyof typeof roles] || [id, '#777'];
 </script>
 
-<div class="role" style:background={color}>
-	{name}
-</div>
+<div class="role" style:background={color}>{name}</div>
 
 <style>
 	.role {
