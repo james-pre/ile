@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Contents from '$components/contents.svelte';
+	import Contents from '$components/Contents.svelte';
 	import '$lib/app.css';
 	import { resourceIcons } from '$lib/data.js';
 	import { Icon } from '@axium/server/web';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Role from '$components/role.svelte';
+	import Role from '$components/Role.svelte';
 	const { data } = $props();
 
 	const { user, viewing } = data;

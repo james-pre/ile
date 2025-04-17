@@ -1,5 +1,5 @@
 <script lang="ts">
-	import User from '$components/user.svelte';
+	import User from '$components/User.svelte';
 
 	const { data } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import User from '$components/user.svelte';
+	import User from '$components/User.svelte';
 	import { Icon } from '@axium/server/web';
 	const { children, data } = $props();
 	const user = $derived(data.user);
