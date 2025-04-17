@@ -11,7 +11,6 @@ export async function load(event: PageServerLoadEvent) {
 
 	const course = await getCourse(id);
 	if (!course) return error(404, 'Course does not exist');
-	console.log(course.userId, user?.id);
 	if (!hasPermission(course, user?.id, 1)) return error(403, 'You do not have permission to view this course');
 
 	return { session, user, course };

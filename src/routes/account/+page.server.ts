@@ -1,8 +1,8 @@
+import { UserSettings } from '$lib/settings.js';
 import { adapter } from '@axium/server/auth.js';
 import { web } from '@axium/server/config.js';
 import { parseForm } from '@axium/server/web/server';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { UserSettings } from '../../lib/settings.js';
 
 export async function load(event) {
 	const data = await event.parent();

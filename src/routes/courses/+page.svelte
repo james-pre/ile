@@ -98,7 +98,7 @@
 	}
 
 	.course:hover {
-		background: #224;
+		background: #334;
 	}
 
 	.actions {
@@ -112,7 +112,7 @@
 		cursor: pointer;
 	}
 
-	.delete:hover {
+	.delete {
 		background: #733;
 	}
 </style>
