@@ -27,10 +27,15 @@ export async function getCourse(id: string): Promise<Course | undefined> {
 
 	course.shares = await database.withSchema('arc').selectFrom('CourseShare').where('courseId', '=', id).selectAll().execute();
 	course.resources = await database.withSchema('arc').selectFrom('Resource').where('courseId', '=', id).selectAll().execute();
+	return course;
 }
 
 export async function createCourse(name: string, userId: string): Promise<void> {
-	await database.withSchema('arc').insertInto('Course').values({ userId, name }).execute();
+	await database.withSchema('arc').insertInto('Course').values({ name, userId }).execute();
+}
+
+export async function deleteCourse(id: string): Promise<void> {
+	await database.withSchema('arc').deleteFrom('Course').where('id', '=', id).execute();
 }
 
 export async function shareCourse(courseId: string, userId: string, permission: number): Promise<void> {

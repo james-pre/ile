@@ -17,13 +17,13 @@
 	{:else}
 		<a href="/auth/signin">
 			<button class="button">
-				<Icon id="light/right-to-bracket" />
+				<Icon i="light/right-to-bracket" />
 				Sign in
 			</button>
 		</a>
 	{/if}
 	<a id="account" href="/account">
-		<Icon id="light/gear-complex" />
+		<Icon i="light/gear-complex" />
 	</a>
 </div>
 

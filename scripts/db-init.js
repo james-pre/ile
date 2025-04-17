@@ -1,16 +1,18 @@
 #!/usr/bin/env node
+import { loadDefaults } from '@axium/server/config.js';
 import { connect, database as db } from '@axium/server/database.js';
 import { exit, defaultOutput as out, someWarnings } from '@axium/server/io.js';
 import { sql } from 'kysely';
 
+loadDefaults();
 connect();
 
-const relationExists = someWarnings(out, [/relation "\w+" already exists/, 'already exists.']);
+const done = () => out('done');
+const alreadyExists = someWarnings(out, [/(relation|schema) "\w+" already exists/, 'already exists.']);
 
 try {
-	out('start', 'Creating Arc schema');
-	await db.schema.createSchema('arc').execute();
-	out('done');
+	out('start', 'Creating schema arc');
+	await db.schema.createSchema('arc').execute().then(done).catch(alreadyExists);
 
 	out('start', 'Creating table Course');
 	await db.schema
@@ -25,12 +27,11 @@ try {
 		.addColumn('labels', sql`text[]`, col => col.notNull().defaultTo(sql`'{}'::text[]`))
 		.addColumn('options', sql`jsonb`, col => col.notNull().defaultTo(sql`'{}'::jsonb`))
 		.execute()
-		.catch(relationExists);
-	out('done');
+		.then(done)
+		.catch(alreadyExists);
 
 	out('start', 'Creating index for Course.userId');
-	db.schema.withSchema('arc').createIndex('Course_userId_index').on('Course').column('userId').execute().catch(relationExists);
-	out('done');
+	await db.schema.withSchema('arc').createIndex('Course_userId_index').on('Course').column('userId').execute().then(done).catch(alreadyExists);
 
 	out('start', 'Creating table CourseShare');
 	await db.schema
@@ -41,16 +42,14 @@ try {
 		.addColumn('sharedAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('permission', 'smallint', col => col.notNull())
 		.execute()
-		.catch(relationExists);
-	out('done');
+		.then(done)
+		.catch(alreadyExists);
 
 	out('start', 'Creating index for CourseShare.userId');
-	db.schema.withSchema('arc').createIndex('CourseShare_userId_index').on('CourseShare').column('userId').execute().catch(relationExists);
-	out('done');
+	await db.schema.withSchema('arc').createIndex('CourseShare_userId_index').on('CourseShare').column('userId').execute().then(done).catch(alreadyExists);
 
 	out('start', 'Creating index for CourseShare.courseId');
-	db.schema.withSchema('arc').createIndex('CourseShare_courseId_index').on('CourseShare').column('courseId').execute().catch(relationExists);
-	out('done');
+	await db.schema.withSchema('arc').createIndex('CourseShare_courseId_index').on('CourseShare').column('courseId').execute().then(done).catch(alreadyExists);
 
 	out('start', 'Creating table Resource');
 	await db.schema
@@ -65,12 +64,13 @@ try {
 		.addColumn('kind', 'text', col => col.notNull())
 		.addColumn('content', 'text', col => col.notNull())
 		.execute()
-		.catch(relationExists);
-	out('done');
+		.then(done)
+		.catch(alreadyExists);
 
 	out('start', 'Creating index for Resource.userId');
-	db.schema.withSchema('arc').createIndex('Resource_userId_index').on('Resource').column('userId').execute().catch(relationExists);
-	out('done');
+	await db.schema.withSchema('arc').createIndex('Resource_userId_index').on('Resource').column('userId').execute().then(done).catch(alreadyExists);
 } catch (e) {
 	exit(e);
+} finally {
+	await db.destroy();
 }

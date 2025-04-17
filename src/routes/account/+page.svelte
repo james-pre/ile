@@ -28,7 +28,7 @@
 				</div>
 			{/each}
 			<button type="submit">
-				<Icon id="check" />
+				<Icon i="check" />
 				Save
 			</button>
 		</form>

@@ -17,7 +17,7 @@
 
 {#snippet sidebar_tab_icon(name: string, icon: string)}
 	<div class={[name, activeSidebarTab == name && 'active']} onclick={() => (activeSidebarTab = name)}>
-		<Icon id={icon} --size="2em" />
+		<Icon i={icon} --size="2em" />
 	</div>
 {/snippet}
 
@@ -39,13 +39,13 @@
 		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
 			{#each resources! as resource}
 				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>
-					<Icon id={resourceIcons[resource.kind]} />
+					<Icon i={resourceIcons[resource.kind]} />
 					{resource.title}
 				</div>
 			{/each}
 			<div class="footer">
 				<button class="add">
-					<Icon id="plus" />
+					<Icon i="plus" />
 					Add
 				</button>
 			</div>
