@@ -2,35 +2,50 @@
 	import { enhance } from '$app/forms';
 	import { userSettings } from '$lib/settings.js';
 	import { Account, Icon } from '@axium/server/web';
-	import '@axium/server/web/lib/styles.css';
 	import '@axium/server/web/lib/account.css';
+	import '@axium/server/web/lib/styles.css';
+	import { fade } from 'svelte/transition';
 
 	const { data, form } = $props();
-</script>
 
-<svelte:head>
-	<title>Account</title>
-</svelte:head>
+	const settings = data.user!.preferences;
+
+	let saved = $state(false);
+
+	const classes = $derived(saved ? ['saved'] : []);
+
+	$effect(() => {
+		if (form?.success) saved = true;
+		setTimeout(() => {
+			saved = false;
+		}, 8_000);
+	});
+</script>
 
 <Account {data}>
 	<div class="account-section main">
-		<form use:enhance action="?/settings" method="post">
+		<form
+			action="?/settings"
+			method="post"
+			use:enhance={() =>
+				async ({ update }) =>
+					update({ reset: false })}
+		>
 			{#if form?.error}
 				<div class="error">{form.error}</div>
 			{/if}
-			{#if form?.success}
-				<div class="success">{form.success}</div>
-			{/if}
 			{#each userSettings as setting}
 				<div class="setting account-item">
-					<label for={setting.id}>{setting.label}</label>
-					<input {...setting} />
+					<label for={setting.name}>{setting.label}</label>
+					{#if setting.type == 'checkbox'}
+						<input type="hidden" name={setting.name} value="false" />
+						<input {...setting} value="true" {...settings[setting.name] ? { checked: true } : {}} />
+					{:else}
+						<input {...setting} value={settings[setting.name]} />
+					{/if}
 				</div>
 			{/each}
-			<button type="submit">
-				<Icon i="check" />
-				Save
-			</button>
+			<button type="submit" class={classes} disabled={saved}>Save</button>
 		</form>
 	</div>
 </Account>
@@ -38,5 +53,18 @@
 <style>
 	form {
 		display: contents;
+	}
+
+	@keyframes success {
+		0% {
+			background-color: #222;
+		}
+		100% {
+			background-color: #3737;
+		}
+	}
+
+	form button.saved {
+		animation: success 2s ease 0s 2 alternate both;
 	}
 </style>

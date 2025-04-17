@@ -6,20 +6,22 @@
 		user,
 		compact = false,
 		self = false,
+		href = `/users/${user.id}`,
 	}: {
 		user: { [K in keyof User]?: User[K] | null };
 		/** If true, don't show the picture */
 		compact?: boolean;
 		/** Whether the user is viewing their own profile */
 		self?: boolean;
+		/** The URL to link to */
+		href?: string;
 	} = $props();
 </script>
 
-<a class={['user', self && 'self']} href="/users/{user.id}">
+<a class={['user', self && 'self']} {href}>
 	{#if !compact}
 		<img src={getUserImage(user as Required<User>)} alt={user.name} />
 	{/if}
-
 	{user.name}
 </a>
 

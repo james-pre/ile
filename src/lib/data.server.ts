@@ -30,8 +30,12 @@ export async function getCourse(id: string): Promise<Course | undefined> {
 	return course;
 }
 
-export async function createCourse(name: string, userId: string): Promise<void> {
-	await database.withSchema('arc').insertInto('Course').values({ name, userId }).execute();
+export async function createCourse(userId: string, data: Partial<Course> & Pick<Course, 'name'>): Promise<void> {
+	await database
+		.withSchema('arc')
+		.insertInto('Course')
+		.values({ ...data, userId })
+		.execute();
 }
 
 export async function deleteCourse(id: string): Promise<void> {

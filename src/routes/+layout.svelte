@@ -7,13 +7,16 @@
 
 <nav>
 	<a href="/">Home</a>
+	{#if user}
+		<a href="/users/{user.id}">Profile</a>
+	{/if}
 	<a href="/courses">Courses</a>
 	<a href="/friends">Friends</a>
 </nav>
 
 <div id="user-menu">
 	{#if user}
-		<User {user} self />
+		<User {user} self href="/account" />
 	{:else}
 		<a href="/auth/signin">
 			<button class="button">
@@ -22,9 +25,6 @@
 			</button>
 		</a>
 	{/if}
-	<a id="account" href="/account">
-		<Icon i="light/gear-complex" />
-	</a>
 </div>
 
 {@render children()}

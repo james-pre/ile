@@ -2,7 +2,7 @@ import type { Preferences } from '@axium/server/auth.js';
 import * as z from 'zod';
 
 export interface Setting {
-	id: Exclude<keyof Preferences, `_${string}`>;
+	name: Exclude<keyof Preferences, `_${string}`>;
 	label: string;
 	description?: string;
 	type: 'checkbox' | 'select' | 'text' | 'range';
@@ -13,7 +13,7 @@ export interface Setting {
 
 export const userSettings = [
 	{
-		id: 'debug',
+		name: 'debug',
 		label: 'Enable Debugging',
 		description: 'View additional information',
 		type: 'checkbox',
@@ -21,7 +21,7 @@ export const userSettings = [
 ] satisfies Setting[];
 
 export const UserSettings = z.object({
-	debug: z.boolean(),
+	debug: z.preprocess(v => v == 'true', z.boolean()),
 });
 export type UserSettings = z.infer<typeof UserSettings>;
 

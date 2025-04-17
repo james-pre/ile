@@ -1,7 +1,13 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { UserSettings } from '../../lib/settings.js';
 import { parseForm } from '@axium/server/web/server';
 import { adapter } from '@axium/server/auth.js';
+
+export async function load(event) {
+	const data = await event.parent();
+	if (!data.user) throw redirect(307, '/auth/signin');
+	return data;
+}
 
 export const actions = {
 	async settings(event) {
@@ -16,6 +22,6 @@ export const actions = {
 
 		await adapter.updateUser!({ id: user.id, preferences: { ...settings, _roles: user.preferences._roles } });
 
-		return { success: true, settings };
+		return { success: true };
 	},
 } satisfies Actions;

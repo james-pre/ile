@@ -26,7 +26,7 @@ export const actions = {
 		if (error) return error;
 
 		try {
-			await createCourse(data.name, user.id);
+			await createCourse(user.id, data);
 		} catch {
 			return fail(500, { error: 'Failed to create course' });
 		}

@@ -4,7 +4,7 @@
 	import { resourceIcons } from '$lib/data.js';
 
 	const { data } = $props();
-	const { name, resources, projects = [] } = data.course!;
+	const course = data.course!;
 
 	let activeSidebarTab = $state('resources');
 
@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>{name}</title>
+	<title>{course.name}</title>
 </svelte:head>
 
 {#snippet sidebar_tab_icon(name: string, icon: string)}
@@ -28,33 +28,29 @@
 			{@render sidebar_tab_icon('projects', 'grid-2')}
 		</div>
 
-		<div class="main" id="projects" style:display={activeSidebarTab == 'projects' ? 'flex' : 'none'}>
-			{#each projects as project}
+		<div class="section" id="projects" style:display={activeSidebarTab == 'projects' ? 'flex' : 'none'}>
+			{#each course.projects ?? [] as project}
 				<div class={['project', activeItemID === project.id && 'selected']} onclick={() => (activeItemID = project.id)}>
 					{project.title}
 				</div>
 			{/each}
 		</div>
 
-		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
-			{#each resources! as resource}
+		<div class="section" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
+			{#each course.resources ?? [] as resource}
 				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>
 					<Icon i={resourceIcons[resource.kind]} />
 					{resource.title}
 				</div>
 			{/each}
 			<div class="footer">
-				<button class="add">
-					<Icon i="plus" />
-					Add
-				</button>
+				<button class="add"><Icon i="plus" />Add</button>
 			</div>
 		</div>
 	</div>
 
-	<!-- Main content area -->
 	<div id="content">
-		{#each resources! as resource}
+		{#each course.resources ?? [] as resource}
 			<Contents {...resource} active={activeItemID === resource.id} />
 		{/each}
 
@@ -65,7 +61,7 @@
 </div>
 
 <a href="/courses">
-	<button id="back"> ← Back to courses </button>
+	<button id="back"> <Icon i="arrow-left-from-bracket" /> Back to courses </button>
 </a>
 
 <style>
@@ -89,7 +85,7 @@
 		overflow: hidden;
 		resize: horizontal;
 
-		.main {
+		.section {
 			padding: 0 1em;
 		}
 
