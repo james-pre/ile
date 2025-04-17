@@ -17,11 +17,13 @@ try {
 		.withSchema('arc')
 		.createTable('Course')
 		.addColumn('id', 'uuid', col => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
-		.addColumn('userId', 'uuid', col => col.notNull().references('User.id').onDelete('cascade').onUpdate('cascade'))
+		.addColumn('userId', 'uuid', col => col.notNull().references('public.User.id').onDelete('cascade').onUpdate('cascade'))
 		.addColumn('name', 'text', col => col.notNull())
 		.addColumn('createdAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
+		.addColumn('description', 'text')
 		.addColumn('visibility', 'smallint', col => col.notNull().defaultTo(0))
 		.addColumn('labels', sql`text[]`, col => col.notNull().defaultTo(sql`'{}'::text[]`))
+		.addColumn('options', sql`jsonb`, col => col.notNull().defaultTo(sql`'{}'::jsonb`))
 		.execute()
 		.catch(relationExists);
 	out('done');
@@ -35,8 +37,8 @@ try {
 		.withSchema('arc')
 		.createTable('CourseShare')
 		.addColumn('courseId', 'uuid', col => col.notNull().references('Course.id').onDelete('cascade').onUpdate('cascade'))
-		.addColumn('userId', 'uuid', col => col.notNull().references('User.id').onDelete('cascade').onUpdate('cascade'))
-		.addColumn('createdAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
+		.addColumn('userId', 'uuid', col => col.notNull().references('public.User.id').onDelete('cascade').onUpdate('cascade'))
+		.addColumn('sharedAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('permission', 'smallint', col => col.notNull())
 		.execute()
 		.catch(relationExists);
@@ -55,14 +57,13 @@ try {
 		.withSchema('arc')
 		.createTable('Resource')
 		.addColumn('id', 'uuid', col => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
-		.addColumn('userId', 'uuid', col => col.notNull().references('User.id').onDelete('cascade').onUpdate('cascade'))
+		.addColumn('courseId', 'uuid', col => col.notNull().references('Course.id').onDelete('cascade').onUpdate('cascade'))
+		.addColumn('userId', 'uuid', col => col.notNull().references('public.User.id').onDelete('cascade').onUpdate('cascade'))
 		.addColumn('createdAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('modifiedAt', 'timestamptz', col => col.notNull().defaultTo(sql`now()`))
 		.addColumn('name', 'text', col => col.notNull())
 		.addColumn('kind', 'text', col => col.notNull())
 		.addColumn('content', 'text', col => col.notNull())
-		// resource specific data
-		.addColumn('metadata', 'jsonb', col => col.notNull().defaultTo(sql`'{}'::jsonb`))
 		.execute()
 		.catch(relationExists);
 	out('done');

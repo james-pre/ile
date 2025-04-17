@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Contents from '$components/contents.svelte';
 	import { Icon } from '@axium/server/web';
-	import { resourceIcons, type Course } from '$lib/data.js';
+	import { resourceIcons } from '$lib/data.js';
 
 	const { data } = $props();
-
-	const { name, resources, projects } = data.course as Course;
+	const { name, resources, projects = [] } = data.course!;
 
 	let activeSidebarTab = $state('resources');
 
@@ -38,7 +37,7 @@
 		</div>
 
 		<div class="main" id="resources" style:display={activeSidebarTab == 'resources' ? 'flex' : 'none'}>
-			{#each resources as resource}
+			{#each resources! as resource}
 				<div class={['resource', activeItemID === resource.id && 'selected']} onclick={() => (activeItemID = resource.id)}>
 					<Icon id={resourceIcons[resource.kind]} />
 					{resource.title}
@@ -55,7 +54,7 @@
 
 	<!-- Main content area -->
 	<div id="content">
-		{#each resources as resource}
+		{#each resources! as resource}
 			<Contents {...resource} active={activeItemID === resource.id} />
 		{/each}
 

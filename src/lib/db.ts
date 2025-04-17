@@ -4,6 +4,7 @@ import type { ResourceKind } from './data.js';
 export interface DBCourse {
 	id: Generated<string>;
 	name: string;
+	description?: string;
 	userId: string;
 	createdAt: Generated<Date>;
 	visibility: Generated<number>;
@@ -13,12 +14,13 @@ export interface DBCourse {
 export interface DBCourseShare {
 	courseId: string;
 	userId: string;
-	createdAt: Generated<Date>;
+	sharedAt: Generated<Date>;
 	permission: number;
 }
 
 export interface DBResource {
 	id: Generated<string>;
+	courseId: string;
 	userId: string;
 	name: string;
 	kind: ResourceKind;

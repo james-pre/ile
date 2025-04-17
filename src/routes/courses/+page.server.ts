@@ -1,8 +1,12 @@
-import type { CourseMetadata } from '$lib/data';
-import * as demo from '$lib/demo';
+import { getCourses } from '$lib/data.server.js';
+import { redirect } from '@sveltejs/kit';
+import type { PageServerLoadEvent } from './$types';
 
-export function load(): {
-	courses: CourseMetadata[];
-} {
-	return { courses: [demo.course] };
+export async function load(event: PageServerLoadEvent) {
+	const data = await event.parent();
+	if (!data.user) redirect(307, '/auth/signin');
+
+	const courses = await getCourses(data.user.id);
+
+	return { ...data, courses };
 }
