@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { userSettings } from '$lib/settings.js';
-	import { Account, Icon } from '@axium/server/web';
+	import { Account } from '@axium/server/web';
 	import '@axium/server/web/lib/account.css';
 	import '@axium/server/web/lib/styles.css';
-	import { fade } from 'svelte/transition';
 
 	const { data, form } = $props();
 
