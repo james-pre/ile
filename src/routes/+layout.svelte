@@ -2,7 +2,7 @@
 	import User from '$components/user.svelte';
 	import { Icon } from '@axium/server/web';
 	const { children, data } = $props();
-	const { user } = data;
+	const user = $derived(data.user);
 </script>
 
 <nav>

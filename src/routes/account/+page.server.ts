@@ -23,7 +23,7 @@ export const actions = {
 
 		await adapter.updateUser!({ id: user.id, preferences: { ...settings, _roles: user.preferences._roles } });
 
-		return { success: true };
+		return { success: true, settings };
 	},
 	name: editName,
 	email: editEmail,

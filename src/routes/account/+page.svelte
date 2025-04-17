@@ -14,7 +14,7 @@
 	const classes = $derived(saved ? ['saved'] : []);
 
 	$effect(() => {
-		if (form?.success) saved = true;
+		if (form?.success && form.settings) saved = true;
 		setTimeout(() => {
 			saved = false;
 		}, 8_000);
