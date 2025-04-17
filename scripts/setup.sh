@@ -13,7 +13,7 @@ elif [ -n "$(command -v apt)" ]; then
 	echo "using apt."
 	sudo apt install -y nodejs postgresql-server
 else
-	echo "No package manager found. Please install nodejs and postgresql-server manually."
+	echo "No package manager detected. Please install nodejs and postgresql-server manually."
 	read -p "(Press enter to continue)"
 fi
 
