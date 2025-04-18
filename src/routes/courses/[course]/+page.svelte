@@ -135,6 +135,8 @@
 <style>
 	textarea {
 		resize: vertical;
+		background-color: inherit;
+		border: none;
 	}
 
 	#app {
