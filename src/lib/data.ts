@@ -51,12 +51,17 @@ export const UploadResource = z.object({
 
 export const AddResource = z.object({
 	name: z.string().min(1, 'Resource name is required').max(100),
-	type: z.string().min(1, 'Resource type is required').max(100),
-	content: z.string().min(1, 'Resource content is required').max(1000),
+	type: z.enum(['text/plain', 'text/markdown', 'text/x-uri']),
+	content: z.string().max(10_000, 'Please add your remaining content after creating the resource.'),
 });
 
 export const RemoveResource = z.object({
 	id: z.string().uuid(),
+});
+
+export const UpdatePlainText = z.object({
+	id: z.string().uuid(),
+	content: z.string().max(10, 'Content must be less than 100k characters (why are you trying to write so much?!)'),
 });
 
 /**

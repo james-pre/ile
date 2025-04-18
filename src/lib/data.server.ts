@@ -85,3 +85,18 @@ export async function getCourseShares(courseId: string): Promise<Required<Course
 export async function createResource(data: Partial<Resource> & Pick<Resource, 'userId' | 'courseId' | 'name' | 'type' | 'content'>): Promise<void> {
 	await database.withSchema('arc').insertInto('Resource').values(data).execute();
 }
+
+export async function deleteResource(id: string): Promise<void> {
+	await database.withSchema('arc').deleteFrom('Resource').where('id', '=', id).execute();
+}
+
+export async function updateResource(data: Partial<Resource> & Pick<Resource, 'id'>): Promise<void> {
+	await database.withSchema('arc').updateTable('Resource').set(data).where('id', '=', data.id).execute();
+}
+
+export async function getResource(id: string): Promise<Resource | undefined> {
+	const resource = await database.withSchema('arc').selectFrom('Resource').where('id', '=', id).selectAll().executeTakeFirst();
+	if (!resource) return undefined;
+
+	return resource;
+}
